@@ -1,3 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .navActive {
+        @apply text-[#e00000] border-b-2 border-[#e00000] px-2 py-1
+    }
+
+    .navInActive {
+        @apply shadow-md border-b-2 border-[#00d260] px-2 py-1
+    }
+
+    .navInActive:hover {
+        @apply shadow-lg transition
+    }
+
+    .btn-login {
+        @apply bg-[#00d260] text-base font-medium text-white px-2 py-1 rounded-md
+    }
+
+    .btn-login:hover {
+        @apply shadow-lg transition
+    }
+
+    .btn-logout {
+        @apply bg-[#e00000] text-base font-medium text-white px-2 py-1 rounded-md
+    }
+
+    .btn-logout:hover {
+        @apply shadow-lg transition
+    }
+
+}
