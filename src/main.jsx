@@ -5,7 +5,8 @@ import { RouterProvider } from "react-router-dom";
 import AuthProvider from '../src/providers/AuthProvider'
 import { Toaster } from 'react-hot-toast';
 import { HelmetProvider } from 'react-helmet-async';
-import myCreatedRouter from './router/Route';
+import myCreatedRouter from './router/Routes';
+
 
 import {
   QueryClient,

@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { app } from "../firebase/firebase.config";
 import useAxiosOpen from "../hooks/useAxiosOpen";
+import PropTypes from 'prop-types';
 
 export const AuthContext = createContext(null);
 
@@ -83,5 +84,10 @@ const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 };
+
+AuthProvider.propTypes = {
+    children: PropTypes.object.isRequired
+}
+
 
 export default AuthProvider;
