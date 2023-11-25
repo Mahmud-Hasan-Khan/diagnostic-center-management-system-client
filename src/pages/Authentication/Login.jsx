@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { ImSpinner3 } from "react-icons/im";
-import { FcGoogle } from 'react-icons/fc';
 import { HiMiniEye, HiEyeSlash } from "react-icons/hi2";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -13,24 +12,10 @@ import { toast } from "react-hot-toast";
 
 const Login = () => {
 
-    const { loading, googleSignIn, signIn } = useAuth();
+    const { loading, signIn } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
-
-    const handleGoogleLogin = async () => {
-        const toastId = toast.loading('Logging in...');
-        try {
-            await googleSignIn(); // code wait here until success the work
-            toast.success('Logged in successful', { id: toastId });
-            // console.log('user login');
-            navigate(location?.state ? location?.state : "/")
-        }
-        // if try fail to work then come this code
-        catch (err) {
-            toast.error(err.message, { id: toastId });
-        }
-    }
 
     const handleLoginWithEmailAndPassword = async (e) => {
         e.preventDefault();
@@ -64,8 +49,8 @@ const Login = () => {
             </Helmet>
             <div className='flex justify-center items-center my-2 lg:my-10'>
                 <div className='flex flex-col rounded-md sm:p-10 shadow px-4 border border-[#00d260]' data-aos="fade-up">
-                    <h1 className='my-4 text-2xl lg:text-4xl font-semibold px-4 text-center' style={{ textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)' }}>Login Now To Explore{' '} <br />
-                        <span className="text-[#e00000] font-medium ">
+                    <h1 className='my-4 text-2xl lg:text-4xl font-semibold px-4 text-center' style={{ textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)' }}>Login To Explore{' '} <br />
+                        <span className="text-[#e00000] lg:text-3xl font-medium ">
                             {/* Style will be inherited from the parent element */}
                             <Typewriter
                                 words={['Diagnosis Services', 'Book Appointment', 'Test Results']}
@@ -131,7 +116,7 @@ const Login = () => {
                         <div>
                             <button
                                 type='submit'
-                                className='btn-dream btn-dream-hover'
+                                className='flex justify-center items-center space-x-2 border p-2 border-gray-300 border-rounded rounded-md cursor-pointer bg-[#4081ec] text-white w-full'
                             >
                                 {loading ? (
                                     <ImSpinner3 className='m-auto animate-spin' size={24} />
@@ -139,13 +124,6 @@ const Login = () => {
                                     'Continue'
                                 )}
                             </button>
-                        </div>
-                        <div className="divider">OR</div>
-                        <div onClick={handleGoogleLogin}
-                            className='flex justify-center items-center space-x-2 border p-2 border-gray-300 border-rounded rounded-md cursor-pointer bg-[#4081ec] text-white'
-                        >
-                            <FcGoogle className='bg-white rounded-full' size={32} />
-                            <p className='text-center'>Continue with Google</p>
                         </div>
                     </form>
                     <p className='px-6 mt-2 text-sm font-medium text-center'>
