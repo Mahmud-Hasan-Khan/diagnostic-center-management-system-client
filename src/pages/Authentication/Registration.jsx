@@ -25,6 +25,9 @@ const Registration = () => {
     const [districts, setDistricts] = useState([]);
     const [upazilas, setUpazilas] = useState([]);
     const [selectedDistrict, setSelectedDistrict] = useState("");
+    const [selectedUpazila, setSelectedUpazila] = useState("");
+    const [districtName, setDistrictName] = useState("");
+    const [upazilaName, setUpazilaName] = useState("");
 
     useEffect(() => {
         // Load districts and upazilas data from JSON files when the component mounts
@@ -52,15 +55,33 @@ const Registration = () => {
         fetchUpazilas();
     }, []);
 
+
     const handleDistrictChange = (selectedDistrict) => {
         // Update the state when the user selects a district
         setSelectedDistrict(selectedDistrict);
+
+        // Find the district object based on the selected district
+        const districtObject = districts.find((district) => district.id === selectedDistrict);
+
+        // console.log('Selected District:', districtObject.name);
+        setDistrictName(districtObject.name)
 
         // Filter upazilas based on the selected district
         const filteredUpazilas = upazilas.filter((upazila) => upazila.district_id === selectedDistrict);
 
         // Set the filtered upazilas to the state
         setUpazilas(filteredUpazilas);
+
+    }
+
+    const handleUpazilaChange = (selectedUpazila) => {
+        // Find the upazila object based on the selected upazila
+        const upazilaObject = upazilas.find((upazila) => upazila.id === selectedUpazila);
+
+        // console.log('Selected Upazila:', upazilaObject.name);
+        setUpazilaName(upazilaObject.name)
+        // Update the state when the user selects an upazila
+        setSelectedUpazila(selectedUpazila);
     }
 
     const onSubmit = data => {
@@ -90,8 +111,8 @@ const Registration = () => {
                                     name: name,
                                     email: email,
                                     bloodGroup: data.bloodGroup,
-                                    district: data.district,
-                                    upazila: data.upazila,
+                                    district: districtName,
+                                    upazila: upazilaName,
                                     role: 'user',
                                     status: 'active'
                                 }
@@ -157,7 +178,7 @@ const Registration = () => {
                         <div className='flex justify-center items-center' >
                             <div className='flex flex-col max-w-md px-6 rounded sm:p-10 border bg-base-100 text-gray-900 relative gap-2' data-aos="fade-up">
 
-                                <h1 className='text-xl font-bold bg-[rgb(202,219,226)] absolute top-[3%] left-0 px-2 rounded-e-xl text-[#00AEEF]'>Welcome To <span className="text-[#e00000] ">MEDICARE</span> </h1>
+                                <h1 className='text-xl font-bold bg-[rgb(202,219,226)] absolute top-[2%] left-0 px-2 rounded-e-xl text-[#00AEEF]'>Welcome To <span className="text-[#e00000] ">MEDICARE</span> </h1>
 
                                 <h1 className='my-4 pt-10 md:pt-0 text-2xl lg:text-3xl font-semibold  text-center' style={{ textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)' }}>Register Now To Explore{' '} <br />
                                     <span className="text-[#e00000] font-medium ">
@@ -258,6 +279,7 @@ const Registration = () => {
                                                 <label className="rounded">
                                                     <select {...register("upazila")}
                                                         className="px-3 py-2 border rounded-md border-gray-300 focus:outline-[#00AEEF] bg-base-100 text-gray-900 w-full" required
+                                                        onChange={(e) => handleUpazilaChange(e.target.value)}
                                                     >
                                                         <option value="">Select Your Upazila</option>
                                                         {upazilas.map((upazila) => (
@@ -311,13 +333,14 @@ const Registration = () => {
                                         </div>
                                         <div>
                                             <label htmlFor='image' className='block mb-2 text-sm'>
-                                                Select Image*:
+                                                Select Your Profile Picture*
                                             </label>
                                             <input
                                                 {...register("image", { required: true })}
                                                 type='file'
                                                 id='image'
                                                 accept='image/*'
+                                                className="file-input border rounded-md border-gray-300 focus:outline-[#00AEEF] file-input-warning w-full"
                                             />
                                             {errors.image && <span className='text-red-500 text-sm'>Image is required.</span>}
                                         </div>
@@ -337,22 +360,7 @@ const Registration = () => {
                                     </div>
                                 </form>
 
-                                <div className='flex items-center pt-4 space-x-1'>
-                                    <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
-                                    <p className='px-3 text-sm dark:text-gray-400'>
-                                        Login with social accounts
-                                    </p>
-                                    <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
-                                </div>
-                                {/* <div
-                            onClick={handleGoogleSignIn}
-                            className='flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer'
-                        >
-                            <FcGoogle size={20} />
-
-                            <p>Continue with Google</p>
-                        </div> */}
-                                <p className='px-6 text-sm text-center text-gray-400'>
+                                <p className='px-6 text-base text-center text-orange-600 '>
                                     Already have an account!
                                     <Link
                                         to='/login'
@@ -360,7 +368,6 @@ const Registration = () => {
                                     >
                                         Log In Now
                                     </Link>
-                                    .
                                 </p>
                             </div>
                         </div>

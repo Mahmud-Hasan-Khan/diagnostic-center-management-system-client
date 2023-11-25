@@ -6,8 +6,9 @@ import Text from "../pages/Test/Text";
 import Login from "../pages/Authentication/Login";
 import Registration from "../pages/Authentication/Registration";
 import Dashboard from "../layout/Dashboard/Dashboard";
-import UserHome from "../pages/Dashboard/UserHome";
-import AdminHome from "../pages/Dashboard/AdminHome";
+import UserHome from "../pages/Dashboard/User/UserHome";
+import AdminHome from "../pages/Dashboard/Admin/AdminHome";
+import UserProfile from "../pages/Dashboard/User/UserProfile";
 
 
 const myCreatedRouter = createBrowserRouter([
@@ -42,6 +43,10 @@ const myCreatedRouter = createBrowserRouter([
             {
                 path: 'userHome',
                 element: <UserHome></UserHome>
+            },
+            {
+                path: 'userProfile',
+                element: <UserProfile></UserProfile>
             },
 
             // admin route
