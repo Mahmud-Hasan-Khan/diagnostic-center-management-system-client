@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import navLogo from '../../../assets/images/Logo.png';
 import { FcHome } from "react-icons/fc";
 import MenuDropdown from "./MenuDropdown";
+import { TbTestPipe } from "react-icons/tb";
 import DarkTheme from "./DarkTheme";
 
 const Navbar = () => {
@@ -34,7 +35,7 @@ const Navbar = () => {
             <NavLink to='/' className={({ isActive }) => (isActive ? 'navActive' : 'navInActive')}><FcHome /> Home</NavLink>
           </li>
           <li>
-            <NavLink to="/test" className={({ isActive }) => (isActive ? 'navActive' : 'navInActive')}>All Test</NavLink>
+            <NavLink to="/allTests" className={({ isActive }) => (isActive ? 'navActive' : 'navInActive')}><TbTestPipe className="text-[#e00000] " /> All Tests</NavLink>
           </li>
         </ul>
       </div>

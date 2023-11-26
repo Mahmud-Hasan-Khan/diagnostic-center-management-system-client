@@ -104,6 +104,7 @@ const Registration = () => {
                     .then(result => {
                         const loggedUser = result.user;
                         console.log(loggedUser);
+                        const toastId = toast.loading('Registration Process Ongoing...');
                         updateUserProfile(name, imageUrl)
                             .then(() => {
                                 // create user entry in the database
@@ -119,16 +120,17 @@ const Registration = () => {
                                 console.log(userInfo);
                                 axiosOpen.post('/users', userInfo)
                                     .then(res => {
+
                                         if (res.data.insertedId) {
                                             // console.log('user profile info updated')
                                             reset();
                                             //toast
-                                            toast.success('Registration Successful')
+                                            toast.success('Registration Successful', { id: toastId });
                                             navigate(from, { replace: true });
                                         }
                                     })
                             })
-                            .catch(error => toast.error(error.message))
+                            .catch(error => toast.error(error.message, { id: toastId }))
                     })
             })
             .catch(err => {

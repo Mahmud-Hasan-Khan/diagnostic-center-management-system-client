@@ -6,7 +6,7 @@
 
 @layer components {
     .navActive {
-        @apply text-[#e00000] border-b-2 border-[#e00000] px-2 py-1
+        @apply text-[#e00000] border-b-2 border-[#e00000] px-2 py-1 w-fit
     }
 
     .navInActive {
@@ -30,6 +30,22 @@
     }
 
     .btn-logout:hover {
+        @apply shadow-lg transition
+    }
+
+    .dashboard-nav-active {
+        @apply text-base text-[#e00000] border border-[#e00000] px-2 py-1 w-40 flex justify-center
+    }
+
+    .dashboard-nav-active:hover {
+        @apply shadow-lg transition
+    }
+
+    .dashboard-nav-inActive {
+        @apply shadow-md border border-[#00d260] px-2 py-1 w-40 flex justify-center
+    }
+
+    .dashboard-nav-inActive:hover {
         @apply shadow-lg transition
     }
 

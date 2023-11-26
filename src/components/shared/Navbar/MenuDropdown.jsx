@@ -9,7 +9,7 @@ import { toast } from 'react-hot-toast';
 const MenuDropdown = () => {
   const [isOpen, setIsOpen] = useState(false)
   const { user, logOut } = useAuth();
-  const { isAdmin } = useAdmin();
+  const [isAdmin] = useAdmin();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -32,7 +32,7 @@ const MenuDropdown = () => {
         {/* Dropdown btn */}
         <div
           onClick={() => setIsOpen(!isOpen)}
-          className='p-4 md:py-1 md:px-2 border-[1px] border-[#e00000] flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition'
+          className='p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition'
         >
           <AiOutlineMenu className='text-[#e00000] ' />
           <div className="hidden md:block tooltip tooltip-top" data-tip={user?.displayName}>
@@ -42,8 +42,8 @@ const MenuDropdown = () => {
               referrerPolicy='no-referrer'
               src={user && user.photoURL ? user.photoURL : avatarImg}
               alt='profile'
-              height='30'
-              width='30'
+              height='38'
+              width='38'
             />
           </div>
         </div>
@@ -52,7 +52,9 @@ const MenuDropdown = () => {
         <div className='absolute rounded-xl shadow-md bg-white overflow-hidden right-0 top-14 lg:top-12 text-sm border'>
           <div className='flex flex-col cursor-pointer p-2 gap-2'>
             {
-              user && isAdmin && <Link className='btn-login flex items-center text-center justify-center' to="/dashboard/adminHome">Dashboard</Link>
+              user && isAdmin && <>
+                <Link className='btn-login flex items-center text-center justify-center' to="/dashboard/adminHome">Dashboard</Link>
+              </>
             }
 
             {

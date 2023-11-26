@@ -9,10 +9,12 @@ import Aos from "aos";
 import { Helmet } from "react-helmet-async";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-hot-toast";
+import useAdmin from "../../hooks/useAdmin";
 
 const Login = () => {
 
-    const { loading, signIn } = useAuth();
+    const { user, loading, signIn } = useAuth();
+    const [isAdmin] = useAdmin();
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
@@ -30,7 +32,8 @@ const Login = () => {
             await signIn(email, password)
             toast.success('Logged in successful', { id: toastId });
             // console.log('user login');
-            navigate(location?.state ? location.state : "/")
+            // navigate(location?.state ? location.state : '/')
+            navigate(isAdmin ? '/dashboard/adminHome' : '/dashboard/userHome');
         }
         catch (err) {
             toast.error(err.message, { id: toastId });
