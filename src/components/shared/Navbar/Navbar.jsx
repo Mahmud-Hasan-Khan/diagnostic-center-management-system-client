@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import navLogo from '../../../../public/logo.png'
+import navLogo from '../../../assets/images/Logo.png';
 import { FcHome } from "react-icons/fc";
 import MenuDropdown from "./MenuDropdown";
 import DarkTheme from "./DarkTheme";
