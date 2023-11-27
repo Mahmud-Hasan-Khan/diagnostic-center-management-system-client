@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ImSpinner3 } from "react-icons/im";
 import { HiMiniEye, HiEyeSlash } from "react-icons/hi2";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Typewriter } from "react-simple-typewriter";
 import 'aos/dist/aos.css';
@@ -13,11 +13,10 @@ import useAdmin from "../../hooks/useAdmin";
 
 const Login = () => {
 
-    const { user, loading, signIn } = useAuth();
+    const { loading, signIn } = useAuth();
     const [isAdmin] = useAdmin();
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
-    const location = useLocation();
 
     const handleLoginWithEmailAndPassword = async (e) => {
         e.preventDefault();
@@ -30,10 +29,19 @@ const Login = () => {
         const toastId = toast.loading('Logging in...');
         try {
             await signIn(email, password)
+
+            if (isAdmin && isAdmin == true) {
+                // If admin, navigate to the admin dashboard
+                // console.log('Navigating to /dashboard/adminHome');
+                navigate('/dashboard');
+            } else {
+                // If normal user, navigate to the user dashboard
+                // console.log('Navigating to /dashboard/userHome');
+                navigate('/dashboard');
+            }
+
             toast.success('Logged in successful', { id: toastId });
-            // console.log('user login');
-            // navigate(location?.state ? location.state : '/')
-            navigate(isAdmin ? '/dashboard/adminHome' : '/dashboard/userHome');
+
         }
         catch (err) {
             toast.error(err.message, { id: toastId });
