@@ -2,7 +2,7 @@ import { FaShoppingCart, FaHome, FaCalendar, FaList, FaUtensils, FaUser } from "
 import { MdMenuBook, MdOutlineRateReview } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../../hooks/useAdmin";
-
+import { CgProfile } from "react-icons/cg";
 
 const Dashboard = () => {
     const [isAdmin] = useAdmin();
@@ -27,7 +27,7 @@ const Dashboard = () => {
                     </>
                         :
                         <>
-                            <li><NavLink to="/dashboard/userHome"><FaHome></FaHome>User Home</NavLink></li>
+                            <li><NavLink className={({ isActive }) => (isActive ? 'dashboard-nav-active' : 'dashboard-nav-inActive')} to="/dashboard/userProfile"><CgProfile></CgProfile>User Profile</NavLink></li>
 
                             <li><NavLink to="/dashboard/paymentHistory"><FaCalendar></FaCalendar>Payment History</NavLink></li>
 

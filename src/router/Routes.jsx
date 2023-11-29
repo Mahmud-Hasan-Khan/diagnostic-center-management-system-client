@@ -12,7 +12,8 @@ import AdminRoute from "./AdminRoute";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import AllTests from "../pages/AllTests/AllTests";
 import TestDetails from "../pages/TestDetails/TestDetails";
-
+import PrivateRoute from "./PrivateRoute";
+import WorkingAllTests from "../pages/AllTests/WorkingAllTests"
 
 const myCreatedRouter = createBrowserRouter([
     {
@@ -29,9 +30,16 @@ const myCreatedRouter = createBrowserRouter([
                 element: <AllTests />
             },
             {
-                path: '/testDetail/:id',
-                element: <TestDetails></TestDetails>,
-                loader: ({ params }) => fetch(`http://localhost:5000/test/${params.id}`)
+                path: '/workingAllTests',
+                element: <WorkingAllTests></WorkingAllTests>
+            },
+            {
+                // path: '/testDetail/:id',
+                path: '/workingAllTests/:id',
+                element: <PrivateRoute>
+                    <TestDetails></TestDetails>
+                </PrivateRoute>,
+                loader: ({ params }) => fetch(`http://localhost:5000/workingAllTests/${params.id}`)
             },
             {
                 path: '/login',
@@ -69,8 +77,6 @@ const myCreatedRouter = createBrowserRouter([
                 path: 'userProfile',
                 element: <UserProfile></UserProfile>
             },
-
-
         ]
     }
 

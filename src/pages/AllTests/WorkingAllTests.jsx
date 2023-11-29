@@ -2,13 +2,15 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../hooks/useAuth";
 import useAxiosOpen from "../../hooks/useAxiosOpen";
 import { motion } from "framer-motion";
-import TestsCard from "./TestsCard";
 import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Container from "../../components/shared/Container/Container"
 import { FaSearch } from 'react-icons/fa';
+import TestingCard from "./TestingCard";
 
-const AllTests = () => {
+
+
+const WorkingAllTests = () => {
 
     const axiosOpen = useAxiosOpen();
     const { user } = useAuth();
@@ -19,10 +21,10 @@ const AllTests = () => {
     const [searchQuery, setSearchQuery] = useState('');
 
     // load all tests data using TanStack Query
-    const { data: tests, refetch } = useQuery({
+    const { data: WorkingTests, refetch } = useQuery({
         queryKey: ['tests'],
         queryFn: async () => {
-            const res = await axiosOpen.get('/allTests');
+            const res = await axiosOpen.get('/workingAllTests');
             return res.data;
         }
     })
@@ -95,14 +97,15 @@ const AllTests = () => {
                         <motion.div
                             className="grid grid-cols-1 lg:grid-cols-3 gap-6 place-items-center py-2 lg:py-6"
                         >
-                            {tests?.map((test, index) => (
+                            {WorkingTests?.map((test, index) => (
                                 <motion.div
                                     key={test._id}
                                     initial={{ opacity: 0, y: 50 }}
                                     animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
                                     transition={{ type: "spring", bounce: 0.4, duration: 0.8, delay: index * 0.2 }}
                                 >
-                                    <TestsCard test={test} />
+                                    {/* <WorkingTestCard test={test} /> */}
+                                    <TestingCard test={test} />
                                 </motion.div>
                             ))}
                         </motion.div>
@@ -114,4 +117,4 @@ const AllTests = () => {
     );
 };
 
-export default AllTests;
+export default WorkingAllTests;

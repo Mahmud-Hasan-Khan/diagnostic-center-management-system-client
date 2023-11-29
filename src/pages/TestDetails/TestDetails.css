@@ -1,0 +1,10 @@
+/* Add these styles to your CSS */
+.available-date {
+    background-color: green !important;
+    /* Set the background color for available dates */
+}
+
+.unavailable-date {
+    background-color: gray !important;
+    /* Set the background color for unavailable dates */
+}
