@@ -13,7 +13,6 @@ import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import AllTests from "../pages/AllTests/AllTests";
 import TestDetails from "../pages/TestDetails/TestDetails";
 import PrivateRoute from "./PrivateRoute";
-import WorkingAllTests from "../pages/AllTests/WorkingAllTests"
 
 const myCreatedRouter = createBrowserRouter([
     {
@@ -30,16 +29,11 @@ const myCreatedRouter = createBrowserRouter([
                 element: <AllTests />
             },
             {
-                path: '/workingAllTests',
-                element: <WorkingAllTests></WorkingAllTests>
-            },
-            {
-                // path: '/testDetail/:id',
-                path: '/workingAllTests/:id',
+                path: '/testDetail/:id',
                 element: <PrivateRoute>
                     <TestDetails></TestDetails>
                 </PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/workingAllTests/${params.id}`)
+                loader: ({ params }) => fetch(`http://localhost:5000/test/${params.id}`)
             },
             {
                 path: '/login',

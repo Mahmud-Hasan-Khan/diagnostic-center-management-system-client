@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { toast } from "react-hot-toast";
@@ -8,6 +8,7 @@ import { useLoaderData } from "react-router-dom";
 import "./TestDetails.css"
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import moment from "moment";
 
 const TestDetails = () => {
     const { image, title, shortDescription, price, availableDates } = useLoaderData();
@@ -29,39 +30,6 @@ const TestDetails = () => {
     const handleTimeChange = (event) => {
         setSelectedTime(event.target.value);
     };
-
-
-    // const updateAvailableSlots = () => {
-    //     // Find the selected date object
-    //     const selectedDateObj = availableDates.find(
-    //         (dateObj) =>
-    //             new Date(dateObj.date).getDate() === selectedDate.getDate() &&
-    //             new Date(dateObj.date).getMonth() === selectedDate.getMonth() &&
-    //             new Date(dateObj.date).getFullYear() === selectedDate.getFullYear()
-    //     );
-
-    //     // If the selected date object is found
-    //     if (selectedDateObj && selectedDateObj.slots > 0) {
-    //         // Update the available slots on the frontend
-    //         setAvailableSlots((prevSlots) => prevSlots - 1);
-
-    //         // Update the available slots on the backend
-    //         axiosSecure
-    //             .patch(`/workingAllTests/${selectedDateObj._id}/decrementSlot`, updateAvailableSlots)
-    //             .then((res) => {
-    //                 if (res.status === 200) {
-    //                     // Backend update successful
-    //                 }
-    //             })
-    //             .catch((error) => {
-    //                 console.error(error);
-    //             });
-    //     } else {
-    //         // Handle the case where no slots are available for the selected date
-    //         console.error("No available slots for the selected date.");
-    //     }
-    // };
-
 
 
     const handleBookNow = () => {
@@ -88,14 +56,9 @@ const TestDetails = () => {
             } else {
                 toast.error("Please select both date and time before booking.");
             }
-
-
         }
-
-
         console.log(selectedDate, selectedTime);
     };
-
 
 
     const availableDateValues = availableDates.map((dateObj) => new Date(dateObj.date));
@@ -106,13 +69,40 @@ const TestDetails = () => {
                 <title>MediCare | Test Details</title>
             </Helmet>
             <Container>
-                <div className="card w-[700px] mx-auto py-4">
-                    <div className="mx-auto flex items-center justify-center">
-                        <div className="border shadow-lg rounded-lg">
-                            <div>
-                                <img className="object-cover w-full" src={image} alt="" />
+                <div className="card mx-auto py-4">
+                    <div className="mx-auto flex items-center justify-evenly gap-3">
+
+                        <div
+                            className="card w-96 h-[450px] bg-base-100 border-y-2 border-[#05d6f7] shadow-xl"
+                        >
+                            <figure>
+                                <img
+                                    src={image}
+                                    alt="instructor"
+                                    className="rounded-xl h-full object-fill w-full transition-transform duration-500"
+                                />
+                            </figure>
+                            <div className="lg:pl-5 px-2 py-4 lg:py-2 w-96 my-auto space-y-1">
+                                <div className="flex justify-between">
+                                    <h2 className="card-title text-[#05d6f7]">{title}</h2>
+                                    <p className="text-orange-500 font-semibold">Only at: ${price}</p>
+                                </div>
+                                <p><span className="font-medium">Description:</span> {shortDescription}</p>
+                                <div className="bg-base-200 rounded py-1">
+                                    <p className="text-center">Available Dates & Slots</p>
+                                    <div className="grid grid-cols-3 gap-2 place-items-center text-center">
+                                        {availableDates.map((date) => (
+                                            <p className="text-sm p-1 border bg-lime-100 rounded" key={date.date}>
+                                                {moment(date.date).format("MMM Do YYYY")} Slots: {date.slots}
+                                            </p>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
-                            <div className="mt-4">
+                        </div>
+
+                        <div className="card w-96 h-[450px] bg-base-100 border-y-2 border-[#05d6f7] shadow-xl">
+                            <div className="mt-4 mx-auto">
                                 {/* Display calendar with available dates */}
                                 <Calendar
                                     value={selectedDate}
@@ -125,36 +115,37 @@ const TestDetails = () => {
                                     )}
                                 />
                             </div>
-                            <div className="mt-4">
-                                <label className="font-medium">Select Time:</label>
-                                <select
-                                    value={selectedTime}
-                                    onChange={handleTimeChange}
-                                    className="border rounded p-2 w-full"
-                                >
-                                    <option value="" disabled>
-                                        Select Time
-                                    </option>
-                                    <option value="10:00 AM">10:00 AM</option>
-                                    <option value="02:00 PM">02:00 PM</option>
-                                    {/* ... Add more options as needed */}
-                                </select>
+                            <div className="flex items-center mt-4 gap-2">
+                                <div className="flex-1">
+                                    <label className="font-medium">Select Time:</label>
+                                    <select
+                                        value={selectedTime}
+                                        onChange={handleTimeChange}
+                                        className="border rounded p-2 w-full"
+                                    >
+                                        <option value="" disabled>
+                                            Select Time
+                                        </option>
+                                        <option value="10:00 AM">10:00 AM</option>
+                                        <option value="02:00 PM">02:00 PM</option>
+                                    </select>
+                                </div>
+                                <div className="flex-1 ">
+                                    <p>Available Slot:</p>
+                                </div>
                             </div>
-                            <div className="flex items-center justify-between px-4 pt-2">
-                                <p>{shortDescription} </p>
-                            </div>
-                            <div className="divider"></div>
+
                             <div className="px-4">
-                                <p>{price} </p>
+                                <div className="flex justify-center pt-4 pb-6">
+                                    <button
+                                        onClick={handleBookNow}
+                                        className="bg-[#e00000d9] hover:bg-[#e00000] flex items-center text-white font-medium rounded p-2 w-fit"
+                                    >
+                                        Book Now
+                                    </button>
+                                </div>
                             </div>
-                            <div className="flex justify-center pt-4 pb-6">
-                                <button
-                                    onClick={handleBookNow}
-                                    className="bg-[#e00000d9] hover:bg-[#e00000] flex items-center text-white font-medium rounded p-2 w-fit"
-                                >
-                                    Book Now
-                                </button>
-                            </div>
+
                         </div>
                     </div>
                 </div>
