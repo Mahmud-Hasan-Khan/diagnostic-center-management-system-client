@@ -9,38 +9,84 @@ import "./TestDetails.css"
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import moment from "moment";
+import Payment from "../../components/Payment/Payment";
 
 const TestDetails = () => {
-    const { image, title, shortDescription, price, availableDates } = useLoaderData();
+    const { _id, title, image, shortDescription, price, availableDates } = useLoaderData();
 
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
 
-
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState("");
-    // const [availableSlots, setAvailableSlots] = useState(0);
+    const [availableSlots, setAvailableSlots] = useState(0);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    // Function to open the modal
+    // const openModal = () => {
+    //     setIsModalOpen(true);
+    // };
+
+    const openModal = () => {
+        setIsModalOpen(true);
+        handleBookNow();
+    };
+
+    // Function to close the modal
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
         // You may want to reset the selected time when the date changes
         setSelectedTime("");
+        setAvailableSlots(0);
+
+        setAvailableSlots(0);
+
+        // Find the selected date object
+        const selectedDateObj = availableDates.find(
+            (dateObj) =>
+                moment(dateObj.date).isSame(date, 'day')
+        );
+
+        // If the selected date object is found, update the available slots
+        if (selectedDateObj) {
+            setAvailableSlots(selectedDateObj.slots);
+        }
+
     };
 
     const handleTimeChange = (event) => {
         setSelectedTime(event.target.value);
     };
 
+    // const updateAvailableSlots = (id) => {
+
+    //     // Update the available slots on the backend
+    //     axiosSecure
+    //         .patch(`/updateSlot/${id}/decrementSlot`)
+    //         .then((res) => {
+    //             if (res.status === 200) {
+    //                 // Backend update successful
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             console.error(error);
+    //         });
+    // };
 
     const handleBookNow = () => {
         // Implement your booking logic here with selectedDate and selectedTime
         if (user && user?.email) {
             const UpcomingAppointment = {
                 testTitle: title,
-                PaymentAmount: '',
+                PaymentAmount: price,
                 appointmentDate: selectedDate,
                 appointmentTime: selectedTime,
                 reportStatus: 'Pending',
+                testStatus: 'Pending'
             }
             if (selectedDate && selectedTime) {
                 axiosSecure.post('/upcomingAppointments', UpcomingAppointment)
@@ -61,6 +107,7 @@ const TestDetails = () => {
     };
 
 
+
     const availableDateValues = availableDates.map((dateObj) => new Date(dateObj.date));
 
     return (
@@ -70,8 +117,7 @@ const TestDetails = () => {
             </Helmet>
             <Container>
                 <div className="card mx-auto py-4">
-                    <div className="mx-auto flex items-center justify-evenly gap-3">
-
+                    <div className="flex mx-auto flex-col lg:flex-row  items-center justify-evenly gap-6">
                         <div
                             className="card w-96 h-[450px] bg-base-100 border-y-2 border-[#05d6f7] shadow-xl"
                         >
@@ -130,15 +176,15 @@ const TestDetails = () => {
                                         <option value="02:00 PM">02:00 PM</option>
                                     </select>
                                 </div>
-                                <div className="flex-1 ">
-                                    <p>Available Slot:</p>
-                                </div>
+                                {/* <div className="flex-1 ">
+                                    <p>Available Slot: {availableSlots}</p>
+                                </div> */}
                             </div>
 
                             <div className="px-4">
                                 <div className="flex justify-center pt-4 pb-6">
                                     <button
-                                        onClick={handleBookNow}
+                                        onClick={openModal}
                                         className="bg-[#e00000d9] hover:bg-[#e00000] flex items-center text-white font-medium rounded p-2 w-fit"
                                     >
                                         Book Now
@@ -149,9 +195,23 @@ const TestDetails = () => {
                         </div>
                     </div>
                 </div>
+                {/* Modal */}
+                <dialog id="my_modal_5" className={`modal ${isModalOpen ? "modal-open" : ""}`}>
+                    <div className="modal-box w-full">
+
+                        <Payment _id={_id} title={title} price={price} ></Payment>
+                        <div className="modal-action">
+                            <form method="dialog">
+                                <button className="btn" onClick={closeModal}>Close</button>
+                            </form>
+                        </div>
+                    </div>
+                </dialog>
             </Container>
         </div>
     );
 };
 
 export default TestDetails;
+
+

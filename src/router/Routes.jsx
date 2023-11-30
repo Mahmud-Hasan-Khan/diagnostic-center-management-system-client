@@ -13,6 +13,7 @@ import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import AllTests from "../pages/AllTests/AllTests";
 import TestDetails from "../pages/TestDetails/TestDetails";
 import PrivateRoute from "./PrivateRoute";
+import UpcomingAppointments from "../pages/Dashboard/User/UpcomingAppointments";
 
 const myCreatedRouter = createBrowserRouter([
     {
@@ -71,6 +72,10 @@ const myCreatedRouter = createBrowserRouter([
                 path: 'userProfile',
                 element: <UserProfile></UserProfile>
             },
+            {
+                path: 'appointments',
+                element: <UpcomingAppointments />
+            }
         ]
     }
 

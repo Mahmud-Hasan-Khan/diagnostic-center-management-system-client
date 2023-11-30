@@ -37,9 +37,6 @@ const Navbar = () => {
           <li>
             <NavLink to="/allTests" className={({ isActive }) => (isActive ? 'navActive' : 'navInActive')}><TbTestPipe className="text-[#e00000] " /> All Tests</NavLink>
           </li>
-          <li>
-            <NavLink to="/workingAllTests" className={({ isActive }) => (isActive ? 'navActive' : 'navInActive')}><TbTestPipe className="text-[#e00000] " />Working All Tests</NavLink>
-          </li>
         </ul>
       </div>
       <div className="navbar-end space-x-1 lg:space-x-2 mr-3 lg:mr-0">

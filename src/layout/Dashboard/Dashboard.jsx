@@ -29,13 +29,15 @@ const Dashboard = () => {
                         <>
                             <li><NavLink className={({ isActive }) => (isActive ? 'dashboard-nav-active' : 'dashboard-nav-inActive')} to="/dashboard/userProfile"><CgProfile></CgProfile>User Profile</NavLink></li>
 
+                            <li><NavLink className={({ isActive }) => (isActive ? 'dashboard-nav-active' : 'dashboard-nav-inActive')} to="/dashboard/appointments"><CgProfile></CgProfile>Appointments</NavLink></li>
+
+
                             <li><NavLink to="/dashboard/paymentHistory"><FaCalendar></FaCalendar>Payment History</NavLink></li>
 
                             <li><NavLink to="/dashboard/cart"><FaShoppingCart></FaShoppingCart>My Cart</NavLink></li>
 
                             <li><NavLink to="/dashboard/review"><MdOutlineRateReview></MdOutlineRateReview>Add Review</NavLink></li>
 
-                            <li><NavLink to="/dashboard/review"><FaList></FaList>My Bookings</NavLink></li>
                         </>
                 }
 
