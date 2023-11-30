@@ -81,6 +81,7 @@ const TestDetails = () => {
         // Implement your booking logic here with selectedDate and selectedTime
         if (user && user?.email) {
             const UpcomingAppointment = {
+                email: user.email,
                 testTitle: title,
                 PaymentAmount: price,
                 appointmentDate: selectedDate,

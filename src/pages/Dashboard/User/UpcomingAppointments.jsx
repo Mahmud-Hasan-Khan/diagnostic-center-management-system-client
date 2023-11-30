@@ -4,17 +4,19 @@ import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import SectionTitle from "../../../components/shared/SectionTitle/SectionTitle";
 import Swal from "sweetalert2";
+import useAuth from "../../../hooks/useAuth";
 
 
 const UpcomingAppointments = () => {
 
     const axiosSecure = useAxiosSecure();
+    const { user } = useAuth();
 
     //data Load Using TanStack Query
     const { data: appointments = [], refetch, isPending: loading } = useQuery({
         queryKey: ['appointments'],
         queryFn: async () => {
-            const res = await axiosSecure.get('/upcomingAppointments');
+            const res = await axiosSecure.get(`/upcomingAppointments?email=${user?.email}`);
             return res.data;
         }
     })
