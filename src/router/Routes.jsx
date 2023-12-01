@@ -14,6 +14,7 @@ import AllTests from "../pages/AllTests/AllTests";
 import TestDetails from "../pages/TestDetails/TestDetails";
 import PrivateRoute from "./PrivateRoute";
 import UpcomingAppointments from "../pages/Dashboard/User/UpcomingAppointments";
+import EditUserProfile from "../pages/Dashboard/User/EditUserProfile";
 
 const myCreatedRouter = createBrowserRouter([
     {
@@ -71,6 +72,11 @@ const myCreatedRouter = createBrowserRouter([
             {
                 path: 'userProfile',
                 element: <UserProfile></UserProfile>
+            },
+            {
+                path: 'editProfile/:id',
+                element: <EditUserProfile></EditUserProfile>,
+                loader: ({ params }) => fetch(`http://localhost:5000/user/${params.id}`)
             },
             {
                 path: 'appointments',
