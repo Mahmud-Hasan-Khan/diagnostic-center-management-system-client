@@ -1,31 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
-import useAuth from "../../hooks/useAuth";
-import useAxiosOpen from "../../hooks/useAxiosOpen";
 import { motion } from "framer-motion";
 import TestsCard from "./TestsCard";
 import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Container from "../../components/shared/Container/Container"
 import { FaSearch } from 'react-icons/fa';
+import useAllTests from "../../hooks/useAllTests";
 
 const AllTests = () => {
-
-    const axiosOpen = useAxiosOpen();
-    const { user } = useAuth();
-
+    const [tests, refetch] = useAllTests();
     const sectionRef = useRef(null);
     const [inView, setInView] = useState(false);
-
     const [searchQuery, setSearchQuery] = useState('');
-
-    // load all tests data using TanStack Query
-    const { data: tests, refetch } = useQuery({
-        queryKey: ['tests'],
-        queryFn: async () => {
-            const res = await axiosOpen.get('/allTests');
-            return res.data;
-        }
-    })
 
     useEffect(() => {
         const handleScroll = () => {

@@ -1,135 +1,151 @@
+import { Helmet } from "react-helmet-async";
+import Container from "../../../components/shared/Container/Container";
+import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { ImSpinner3 } from "react-icons/im";
+import useAuth from "../../../hooks/useAuth";
+import { useForm } from "react-hook-form";
+import { useLoaderData, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const EditUserProfile = () => {
+    // const userProfile = useLoaderData();
+    const axiosSecure = useAxiosSecure();
+    const { user } = useAuth();
+    const { loading, updateUserProfile } = useAuth();
 
-    // const axiosSecure = useAxiosSecure();
-    // const { user } = useAuth();
-    // const { loading, updateUserProfile } = useAuth();
+    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
 
-    // const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
+    const [districts, setDistricts] = useState([]);
+    const [upazilas, setUpazilas] = useState([]);
+    const [upazila1, setUpazila1] = useState([]);
+    const [selectedDistrict, setSelectedDistrict] = useState("");
+    const [selectedUpazila, setSelectedUpazila] = useState("");
+    const [districtName, setDistrictName] = useState("");
+    const [upazilaName, setUpazilaName] = useState("");
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
 
-    // const [districts, setDistricts] = useState([]);
-    // const [upazilas, setUpazilas] = useState([]);
-    // const [selectedDistrict, setSelectedDistrict] = useState("");
-    // const [selectedUpazila, setSelectedUpazila] = useState("");
-    // const [districtName, setDistrictName] = useState("");
-    // const [upazilaName, setUpazilaName] = useState("");
+    // data Load Using TanStack Query
+    const { data: userProfile = {}, refetch } = useQuery({
+        queryKey: ['userProfile', id],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/user/${id}`);
+            return res.data;
+        }
+    })
+    console.log(userProfile);
 
-    // const navigate = useNavigate();
-    // const location = useLocation();
-    // const from = location.state?.from?.pathname || '/';
 
-    // //data Load Using TanStack Query
-    // const { data: userProfile = {}, refetch } = useQuery({
-    //     queryKey: ['userProfile'],
-    //     queryFn: async () => {
-    //         const res = await axiosSecure.get(`/userProfile?email=${user?.email}`);
-    //         return res.data;
-    //     }
-    // })
+    useEffect(() => {
+        // Load districts and upazilas data from JSON files when the component mounts
+        const fetchDistricts = async () => {
+            try {
+                const response = await fetch("http://localhost:5000/districts");
+                const data = await response.json();
+                setDistricts(data);
+            } catch (error) {
+                console.error("Error loading districts:", error);
+            }
+        };
 
-    // useEffect(() => {
-    //     // Load districts and upazilas data from JSON files when the component mounts
-    //     const fetchDistricts = async () => {
-    //         try {
-    //             const response = await fetch("http://localhost:5000/districts");
-    //             const data = await response.json();
-    //             setDistricts(data);
-    //         } catch (error) {
-    //             console.error("Error loading districts:", error);
-    //         }
-    //     };
+        const fetchUpazilas = async () => {
+            try {
+                const response = await fetch("http://localhost:5000/upazilas");
+                const data = await response.json();
+                setUpazilas(data);
+                setUpazila1(data);
+            } catch (error) {
+                console.error("Error loading upazilas:", error);
+            }
+        };
 
-    //     const fetchUpazilas = async () => {
-    //         try {
-    //             const response = await fetch("http://localhost:5000/upazilas");
-    //             const data = await response.json();
-    //             setUpazilas(data);
-    //         } catch (error) {
-    //             console.error("Error loading upazilas:", error);
-    //         }
-    //     };
+        fetchDistricts();
+        fetchUpazilas();
+    }, []);
+    // console.log(districts);
+    // console.log(upazilas);
 
-    //     fetchDistricts();
-    //     fetchUpazilas();
-    // }, []);
+    const handleDistrictChange = (selectedDistrict) => {
+        // Update the state when the user selects a district
+        setSelectedDistrict(selectedDistrict);
+        console.log(selectedDistrict);
 
-    // const handleDistrictChange = (selectedDistrict) => {
-    //     // Update the state when the user selects a district
-    //     setSelectedDistrict(selectedDistrict);
 
-    //     // Find the district object based on the selected district
-    //     const districtObject = districts.find((district) => district.id === selectedDistrict);
+        // Find the district object based on the selected district
+        const districtObject = districts.find((district) => district.id === selectedDistrict);
 
-    //     // console.log('Selected District:', districtObject.name);
-    //     setDistrictName(districtObject.name)
+        // console.log('Selected District:', districtObject.name);
+        setDistrictName(districtObject.name)
 
-    //     // Filter upazilas based on the selected district
-    //     const filteredUpazilas = upazilas.filter((upazila) => upazila.district_id === selectedDistrict);
+        // Filter upazilas based on the selected district
+        const filteredUpazilas = upazila1.filter((upazila) => upazila.district_id === selectedDistrict);
 
-    //     // Set the filtered upazilas to the state
-    //     setUpazilas(filteredUpazilas);
+        // Set the filtered upazilas to the state
+        setUpazilas(filteredUpazilas);
 
-    // }
+    }
 
-    // const handleUpazilaChange = (selectedUpazila) => {
-    //     // Find the upazila object based on the selected upazila
-    //     const upazilaObject = upazilas.find((upazila) => upazila.id === selectedUpazila);
+    const handleUpazilaChange = (selectedUpazila) => {
+        // Find the upazila object based on the selected upazila
+        const upazilaObject = upazilas.find((upazila) => upazila.id === selectedUpazila);
 
-    //     // console.log('Selected Upazila:', upazilaObject.name);
-    //     setUpazilaName(upazilaObject.name)
-    //     // Update the state when the user selects an upazila
-    //     setSelectedUpazila(selectedUpazila);
-    // }
+        // console.log('Selected Upazila:', upazilaObject.name);
+        setUpazilaName(upazilaObject.name)
+        // Update the state when the user selects an upazila
+        setSelectedUpazila(selectedUpazila);
+    }
 
-    // const onSubmit = data => {
-    //     const { name, email, image } = data;
-    //     // console.log(data);
-    //     // Image Upload
-    //     const formData = new FormData()
-    //     formData.append('image', image[0])
+    const onSubmit = data => {
+        const { name, email, image } = data;
+        // console.log(data);
+        // Image Upload
+        const formData = new FormData()
+        formData.append('image', image[0])
 
-    //     const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`
-    //     fetch(url, {
-    //         method: 'POST',
-    //         body: formData,
-    //     })
-    //         .then(res => res.json())
-    //         .then(imageData => {
-    //             const imageUrl = imageData.data.display_url;
-    //             const toastId = toast.loading('Registration Process Ongoing...');
-    //             updateUserProfile(name, imageUrl)
-    //                 .then(() => {
-    //                     // create user entry in the database
-    //                     const userInfo = {
-    //                         name: user.displayName,
-    //                         email: user.email,
-    //                         bloodGroup: data?.bloodGroup,
-    //                         district: districtName,
-    //                         upazila: upazilaName,
-    //                         role: 'user',
-    //                         status: 'active'
-    //                     }
-    //                     console.log(userInfo);
-    //                     axiosSecure.post('/users', userInfo)
-    //                         .then(res => {
+        const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`
+        fetch(url, {
+            method: 'POST',
+            body: formData,
+        })
+            .then(res => res.json())
+            .then(imageData => {
+                const imageUrl = imageData.data.display_url;
+                const toastId = toast.loading('Registration Process Ongoing...');
+                updateUserProfile(name, imageUrl)
+                    .then(() => {
+                        // create user entry in the database
+                        const userInfo = {
+                            name: user.displayName,
+                            email: user.email,
+                            bloodGroup: data?.bloodGroup,
+                            district: districtName,
+                            upazila: upazilaName,
+                        }
+                        console.log(userInfo);
+                        axiosSecure.patch(`/editUserProfile/${userProfile._id}`, userInfo)
+                            .then(res => {
 
-    //                             if (res.data.insertedId) {
-    //                                 // console.log('user profile info updated')
-    //                                 reset();
-    //                                 //toast
-    //                                 toast.success('Registration Successful', { id: toastId });
-    //                                 navigate(from, { replace: true });
-    //                             }
-    //                         })
-    //                 })
-    //                 .catch(error => toast.error(error.message, { id: toastId }))
-    //         })
+                                if (res.data.modifiedCount > 0) {
+                                    // console.log('user profile info updated')
+                                    reset();
+                                    //toast
+                                    toast.success('Registration Successful', { id: toastId });
+                                    refetch();
+                                    navigate(from, { replace: true });
+                                }
+                            })
+                    })
+                    .catch(error => toast.error(error.message, { id: toastId }))
+            })
 
-    // };
+    };
 
     return (
         <div>
-            <h2>Edit Profile</h2>
             <div className="rounded-lg">
                 <Helmet>
                     <title>MediCare | Profile</title>
@@ -153,7 +169,7 @@ const EditUserProfile = () => {
                                             </label>
                                             <input
                                                 type='text'
-                                                {...register("name")} defaultValue={user?.displayName}
+                                                {...register("name")} defaultValue={user?.displayName} readOnly
                                                 id='name'
                                                 className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-[#00AEEF] bg-base-100 text-gray-900'
 
@@ -183,8 +199,8 @@ const EditUserProfile = () => {
                                                     <input
                                                         type='text'
                                                         {...register("bloodGroup")}
-                                                        defaultValue={userProfile[0]?.bloodGroup}
-                                                        id='bloodGroup'
+                                                        defaultValue={userProfile?.bloodGroup}
+                                                        id='bloodGroup' readOnly
                                                         className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-[#00AEEF] bg-base-100 text-gray-900'
                                                     />
                                                 </label>

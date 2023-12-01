@@ -4,7 +4,7 @@ import "react-calendar/dist/Calendar.css";
 import { toast } from "react-hot-toast";
 import { Helmet } from "react-helmet-async";
 import Container from "../../components/shared/Container/Container";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import "./TestDetails.css"
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -32,7 +32,8 @@ const TestDetails = () => {
     };
 
     const handleDateChange = (date) => {
-        setSelectedDate(date);
+        console.log();
+        setSelectedDate(new Date(date).toLocaleDateString());
         // You may want to reset the selected time when the date changes
         setSelectedTime("");
         setAvailableSlots(0);
@@ -54,33 +55,19 @@ const TestDetails = () => {
         setSelectedTime(event.target.value);
     };
 
-    // const updateAvailableSlots = (id) => {
-
-    //     // Update the available slots on the backend
-    //     axiosSecure
-    //         .patch(`/updateSlot/${id}/decrementSlot`)
-    //         .then((res) => {
-    //             if (res.status === 200) {
-    //                 // Backend update successful
-    //             }
-    //         })
-    //         .catch((error) => {
-    //             console.error(error);
-    //         });
-    // };
-
     const handleApplyCoupon = (e) => {
         e.preventDefault();
 
         const form = e.target;
-        const couponCode = form.couponCode.value;
-        console.log(couponCode);
+        // console.log(couponCode);
         if (form.couponCode.value === 'MEDICARE05') {
             const newPrice = price - (price * 0.05);
             setDiscountPrice(newPrice);
         }
     }
+    // console.log(selectedDate);
 
+    const { id } = useParams();
     const handleBookNow = () => {
         // Implement your booking logic here with selectedDate and selectedTime
         if (user && user?.email) {
@@ -94,12 +81,12 @@ const TestDetails = () => {
                 testStatus: 'Pending'
             }
             if (selectedDate && selectedTime) {
-                axiosSecure.post('/upcomingAppointments', UpcomingAppointment)
+                axiosSecure.post(`/upcomingAppointments?id=${id}`, UpcomingAppointment)
                     .then(res => {
                         // console.log(res.data);
                         if (res.data.insertedId) {
                             // updateAvailableSlots();
-                            toast.success(`You have successfully booked for ${title} ${selectedDate.toLocaleDateString()} at ${selectedTime}`);
+                            toast.success(`You have successfully booked for ${title} ${selectedDate} at ${selectedTime}`);
                             // refetch cart to update the cart item
                             // refetch();
                         }
@@ -108,7 +95,7 @@ const TestDetails = () => {
                 toast.error("Please select both date and time before booking.");
             }
         }
-        console.log(selectedDate, selectedTime);
+        // console.log(selectedDate, selectedTime);
     };
     const availableDateValues = availableDates.map((dateObj) => new Date(dateObj.date));
 
@@ -151,6 +138,8 @@ const TestDetails = () => {
 
                         <div className="card w-96 h-[450px] bg-base-100 border-y-2 border-[#05d6f7] shadow-xl">
                             <div className="mt-4 mx-auto">
+                                {/* {console.log(availableDateValues)} */}
+
                                 {/* Display calendar with available dates */}
                                 <Calendar
                                     value={selectedDate}
@@ -185,19 +174,25 @@ const TestDetails = () => {
 
                             <div className="px-4">
                                 <div className="flex justify-center pt-4 pb-6">
-                                    {
-                                        !selectedDate || !selectedTime ? <button
+                                    {!selectedDate || !selectedTime ? (
+                                        <button
                                             onClick={openModal}
-                                            className="bg-[#e00000d9] hover:bg-[#e00000] flex items-center text-white font-medium rounded p-2 w-fit" disabled
+                                            className="bg-[#e00000d9] hover:bg-[#e00000] flex items-center text-white font-medium rounded p-2 w-fit"
+                                            disabled
                                         >
                                             Select date and time for booking
-                                        </button> : <button
-                                            onClick={openModal}
-                                            className="bg-orange-500 hover:bg-[#e00000] flex items-center text-white font-medium rounded p-2 w-fit"
-                                        >
-                                            Book Now
                                         </button>
-                                    }
+                                    ) : (
+                                        <button
+                                            onClick={openModal}
+                                            className={`flex items-center text-white font-medium rounded p-2 w-fit ${availableSlots === 0 ? "bg-gray-500" : "bg-orange-500 hover:bg-[#e00000]"
+                                                }`}
+                                            disabled={availableSlots === 0}
+                                        >
+                                            {availableSlots === 0 ? "Available Slot is 0, You can't book this" : "Book Now"}
+                                        </button>
+                                    )}
+
                                 </div>
                             </div>
 

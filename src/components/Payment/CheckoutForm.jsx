@@ -6,8 +6,10 @@ import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
+import useAllTests from "../../hooks/useAllTests";
 
 const CheckoutForm = ({ title, discountPrice, handleBookNow }) => {
+    const [refetch] = useAllTests();
     const [error, setError] = useState('');
     const [clientSecret, setClientSecret] = useState('');
     const [transactionId, setTransactionId] = useState('');
@@ -88,6 +90,7 @@ const CheckoutForm = ({ title, discountPrice, handleBookNow }) => {
                 const res = await axiosSecure.post('/payments', payment);
                 // console.log('payment saved', res.data);
                 if (res.data?.paymentResult?.insertedId) {
+                    refetch();
                     Swal.fire({
                         icon: "success",
                         text: 'Payment Done Successfully',
