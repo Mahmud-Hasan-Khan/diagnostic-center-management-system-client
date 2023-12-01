@@ -13,25 +13,19 @@ import Payment from "../../components/Payment/Payment";
 
 const TestDetails = () => {
     const { _id, title, image, shortDescription, price, availableDates } = useLoaderData();
-
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
 
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState("");
     const [availableSlots, setAvailableSlots] = useState(0);
+    const [discountPrice, setDiscountPrice] = useState(price);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    // Function to open the modal
-    // const openModal = () => {
-    //     setIsModalOpen(true);
-    // };
-
     const openModal = () => {
         setIsModalOpen(true);
-        handleBookNow();
+        // handleBookNow();
     };
-
     // Function to close the modal
     const closeModal = () => {
         setIsModalOpen(false);
@@ -41,8 +35,6 @@ const TestDetails = () => {
         setSelectedDate(date);
         // You may want to reset the selected time when the date changes
         setSelectedTime("");
-        setAvailableSlots(0);
-
         setAvailableSlots(0);
 
         // Find the selected date object
@@ -77,13 +69,25 @@ const TestDetails = () => {
     //         });
     // };
 
+    const handleApplyCoupon = (e) => {
+        e.preventDefault();
+
+        const form = e.target;
+        const couponCode = form.couponCode.value;
+        console.log(couponCode);
+        if (form.couponCode.value === 'MEDICARE05') {
+            const newPrice = price - (price * 0.05);
+            setDiscountPrice(newPrice);
+        }
+    }
+
     const handleBookNow = () => {
         // Implement your booking logic here with selectedDate and selectedTime
         if (user && user?.email) {
             const UpcomingAppointment = {
                 email: user.email,
                 testTitle: title,
-                PaymentAmount: price,
+                PaymentAmount: discountPrice,
                 appointmentDate: selectedDate,
                 appointmentTime: selectedTime,
                 reportStatus: 'Pending',
@@ -106,9 +110,6 @@ const TestDetails = () => {
         }
         console.log(selectedDate, selectedTime);
     };
-
-
-
     const availableDateValues = availableDates.map((dateObj) => new Date(dateObj.date));
 
     return (
@@ -177,19 +178,26 @@ const TestDetails = () => {
                                         <option value="02:00 PM">02:00 PM</option>
                                     </select>
                                 </div>
-                                {/* <div className="flex-1 ">
+                                <div className="flex-1 ">
                                     <p>Available Slot: {availableSlots}</p>
-                                </div> */}
+                                </div>
                             </div>
 
                             <div className="px-4">
                                 <div className="flex justify-center pt-4 pb-6">
-                                    <button
-                                        onClick={openModal}
-                                        className="bg-[#e00000d9] hover:bg-[#e00000] flex items-center text-white font-medium rounded p-2 w-fit"
-                                    >
-                                        Book Now
-                                    </button>
+                                    {
+                                        !selectedDate || !selectedTime ? <button
+                                            onClick={openModal}
+                                            className="bg-[#e00000d9] hover:bg-[#e00000] flex items-center text-white font-medium rounded p-2 w-fit" disabled
+                                        >
+                                            Select date and time for booking
+                                        </button> : <button
+                                            onClick={openModal}
+                                            className="bg-orange-500 hover:bg-[#e00000] flex items-center text-white font-medium rounded p-2 w-fit"
+                                        >
+                                            Book Now
+                                        </button>
+                                    }
                                 </div>
                             </div>
 
@@ -200,7 +208,23 @@ const TestDetails = () => {
                 <dialog id="my_modal_5" className={`modal ${isModalOpen ? "modal-open" : ""}`}>
                     <div className="modal-box w-full">
 
-                        <Payment _id={_id} title={title} price={price} ></Payment>
+                        {/* apply coupon */}
+                        <div className="card w-auto">
+                            <h5> Payable Amount : ${discountPrice}</h5>
+                            <div className='flex items-center justify-between'>
+                                <h2 className="text-2xl font-medium">Have coupon?</h2>
+                                <h2 className="text-2xl font-medium text-white bg-[#e00000] rounded-s-badge p-1 ">Get 5% Discount</h2>
+                            </div>
+                            <form onSubmit={handleApplyCoupon}>
+                                <div className="form-control p-6">
+                                    <label className="input-group flex items-center justify-between">
+                                        <input type="text" name='couponCode' placeholder="Coupon code" className="rounded-lg p-3 border border-red-300" />
+                                        <input type="submit" value="Apply Coupon" className="btn bg-[#f97316] text-xl font-medium text-white p-3 rounded-lg hover:bg-[#ff9416] hover:shadow-lg mt-[1px] " style={{ textTransform: "none" }} />
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
+                        <Payment _id={_id} title={title} discountPrice={discountPrice} handleBookNow={handleBookNow} ></Payment>
                         <div className="modal-action">
                             <form method="dialog">
                                 <button className="btn" onClick={closeModal}>Close</button>

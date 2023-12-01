@@ -5,9 +5,9 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import PropTypes from 'prop-types';
 
-
-const CheckoutForm = ({ title, discountPrice }) => {
+const CheckoutForm = ({ title, discountPrice, handleBookNow }) => {
     const [error, setError] = useState('');
     const [clientSecret, setClientSecret] = useState('');
     const [transactionId, setTransactionId] = useState('');
@@ -18,8 +18,6 @@ const CheckoutForm = ({ title, discountPrice }) => {
 
     const navigate = useNavigate();
 
-
-
     useEffect(() => {
         if (discountPrice > 0) {
             axiosSecure.post('/create-payment-intent', { price: discountPrice })
@@ -28,7 +26,6 @@ const CheckoutForm = ({ title, discountPrice }) => {
                     setClientSecret(res.data.clientSecret);
                 })
         }
-
 
     }, [axiosSecure, discountPrice])
 
@@ -75,6 +72,7 @@ const CheckoutForm = ({ title, discountPrice }) => {
             if (paymentIntent.status === 'succeeded') {
                 // console.log('transaction id', paymentIntent.id);
                 setTransactionId(paymentIntent.id)
+                handleBookNow()
 
                 //now save the payment in the database
                 const payment = {
@@ -135,5 +133,11 @@ const CheckoutForm = ({ title, discountPrice }) => {
         </form>
     );
 };
+
+CheckoutForm.propTypes = {
+    title: PropTypes.string.isRequired,
+    discountPrice: PropTypes.number.isRequired,
+    handleBookNow: PropTypes.func.isRequired
+}
 
 export default CheckoutForm;

@@ -50,7 +50,7 @@ const UpcomingAppointments = () => {
 
 
     return (
-        <div className="bg-white rounded-lg">
+        <div className="bg-white rounded-lg overflow-hidden">
             <Helmet>
                 <title>Upcoming Appointments | Dashboard</title>
             </Helmet>
@@ -62,7 +62,7 @@ const UpcomingAppointments = () => {
                             <span className="loading loading-infinity loading-lg text-[#00AEEF]"></span>
                         </div>
                     ) : appointments && appointments.length > 0 ? (
-                        <div className="max-w-5xl mx-auto">
+                        <div className="px-6 mx-auto">
                             <h4 className="text-center text-lg text-[#ac52b4] font-medium">Total Appointment Found {appointments.length}</h4>
                             <div className="overflow-x-auto">
                                 <table className="table">

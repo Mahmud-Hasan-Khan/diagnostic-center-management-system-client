@@ -47,9 +47,8 @@ const Dashboard = () => {
 
                 <li><NavLink to="/order/salad"><MdMenuBook></MdMenuBook>Menu</NavLink></li>
             </ul>
-            <div className='flex-1  '>
-                <div className='p-5 flex justify-center '>
-                    {/* Outlet for dynamic contents */}
+            <div className='flex-1'>
+                <div className='p-2 lg:p-5 flex justify-center'>
                     <Outlet></Outlet>
                 </div>
             </div>
