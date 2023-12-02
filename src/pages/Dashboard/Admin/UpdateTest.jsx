@@ -1,19 +1,31 @@
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import SectionTitle from "../../../components/shared/SectionTitle/SectionTitle";
-import { useState } from "react";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { toast } from "react-hot-toast";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useState } from "react";
 
-const AddTest = () => {
+
+const UpdateTest = () => {
     const axiosSecure = useAxiosSecure();
+    const { id } = useParams();
+    // data Load Using TanStack Query
+    const { data: test = {}, refetch } = useQuery({
+        queryKey: ['test', id],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/test/${id}`);
+            return res.data;
+        }
+    })
 
     const [selectedTestAppointmentDate1, setSelectedTestAppointmentDate1] = useState(null);
     const [selectedTestAppointmentDate2, setSelectedTestAppointmentDate2] = useState(null);
     const [selectedTestAppointmentDate3, setSelectedTestAppointmentDate3] = useState(null);
 
-    const handleAddATest = (e) => {
+    const handleUpdateTest = (e) => {
         e.preventDefault();
 
         // get data from user input
@@ -28,7 +40,7 @@ const AddTest = () => {
         const slots3 = form.slots3.value;
 
 
-        const newTest = {
+        const updateTest = {
             image, title, priceNumber, shortDescription,
             availableDates: [
                 {
@@ -45,17 +57,18 @@ const AddTest = () => {
                 },
             ],
         }
-        // console.log(newTest);
+        console.log(updateTest);
 
-        const toastId = toast.loading('Adding a new Test...');
+        const toastId = toast.loading('Updating Test...');
 
         // send New added job data to server
-        axiosSecure.post('/addATest', newTest)
+        axiosSecure.patch(`/updateTest/${test._id}`, updateTest)
             .then(res => {
                 // console.log(res.data);
-                if (res.data.insertedId) {
-                    toast.success('New Test Added Successful', { id: toastId });
+                if (res.data.modifiedCount > 0) {
+                    toast.success('Test Updated Successful', { id: toastId });
                     form.reset();
+                    refetch()
                 }
             })
             .catch(error => {
@@ -70,13 +83,13 @@ const AddTest = () => {
     return (
         <>
             <Helmet>
-                <title>Add A Test | Admin Dashboard</title>
+                <title>Update A Test | Admin Dashboard</title>
             </Helmet>
             <div>
                 <div className='py-4 lg:py-10 w-full'>
                     <div className="bg-white px-4 lg:px-20 py-4 lg:py-6 m-4 lg:mx-28  shadow-2xl rounded-xl">
-                        <SectionTitle heading="Add A Test" subheading="Add a New Test"></SectionTitle>
-                        <form onSubmit={handleAddATest}>
+                        <SectionTitle heading="Update A Test" subheading="Update Existing Test"></SectionTitle>
+                        <form onSubmit={handleUpdateTest}>
 
                             {/* form test Title and image row */}
 
@@ -86,7 +99,7 @@ const AddTest = () => {
                                         <span className="text-lg font-medium ">Test Name</span>
                                     </label>
                                     <label className="rounded">
-                                        <input type="text" name="testTitle" required placeholder="Test Title" className="input input-bordered w-full" />
+                                        <input type="text" name="testTitle" required defaultValue={test?.title} className="input input-bordered w-full" />
                                     </label>
                                 </div>
                                 <div className="form-control md:w-1/2">
@@ -94,7 +107,7 @@ const AddTest = () => {
                                         <span className="text-lg font-medium">Test Price</span>
                                     </label>
                                     <label className="rounded">
-                                        <input type="text" name="price" required placeholder="Test Price" className="input input-bordered w-full" />
+                                        <input type="text" name="price" required defaultValue={test?.price} className="input input-bordered w-full" />
                                     </label>
                                 </div>
                             </div>
@@ -106,7 +119,7 @@ const AddTest = () => {
                                         <span className="text-lg font-medium">Test Image</span>
                                     </label>
                                     <label className="rounded">
-                                        <input type="url" name="image" placeholder="Test Banner Image URL" required className="input input-bordered w-full" />
+                                        <input type="url" name="image" defaultValue={test?.image} required className="input input-bordered w-full" />
                                     </label>
                                 </div>
                             </div>
@@ -195,12 +208,12 @@ const AddTest = () => {
                                         <span className="text-lg font-medium">Test Description</span>
                                     </label>
                                     <label className="rounded">
-                                        <textarea type="text" name="shortDescription" placeholder="Test Description" required className="input input-bordered w-full" />
+                                        <textarea type="text" name="shortDescription" defaultValue={test?.shortDescription} required className="input input-bordered w-full" />
                                     </label>
                                 </div>
                             </div>
 
-                            <input type="submit" value="Add A Test" className="btn-block btn bg-[#e00000] text-xl font-medium text-white py-3 rounded-lg hover:bg-[#ff9416] hover:shadow-lg mb-2" style={{ textTransform: "none" }} />
+                            <input type="submit" value="Update Test" className="btn-block btn bg-[#e00000d8] text-xl font-medium text-white py-3 rounded-lg hover:bg-[#e00000] hover:shadow-lg" style={{ textTransform: "none" }} />
                         </form>
                     </div>
                 </div>
@@ -209,4 +222,4 @@ const AddTest = () => {
     );
 };
 
-export default AddTest;
+export default UpdateTest;

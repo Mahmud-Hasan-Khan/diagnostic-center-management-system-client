@@ -11,7 +11,7 @@ const ManageAllTest = () => {
 
     const [tests, refetch, loading] = useAllTests();
     const axiosSecure = useAxiosSecure();
-    console.log(tests);
+    // console.log(tests);
 
     const handleDeleteJob = (id) => {
         Swal.fire({
@@ -93,14 +93,12 @@ const ManageAllTest = () => {
                                                     ))}
                                                 </td>
                                                 <td>
-                                                    <td>
-                                                        <Link
-                                                            to={`/updateTest/${test._id}`}
-                                                            className="bg-orange-600 hover:bg-[#00AEEF] p-2 rounded text-white font-medium flex gap-1"
-                                                        ><MdOutlineRateReview className="text-xl text-white"></MdOutlineRateReview>
-                                                            Update
-                                                        </Link>
-                                                    </td>
+                                                    <Link
+                                                        to={`/dashboard/updateTest/${test._id}`}
+                                                        className="bg-orange-600 hover:bg-[#00AEEF] p-2 rounded text-white font-medium flex gap-1"
+                                                    ><MdOutlineRateReview className="text-xl text-white"></MdOutlineRateReview>
+                                                        Update
+                                                    </Link>
                                                 </td>
                                                 <td><button onClick={() => handleDeleteJob(test._id)} className="bg-[#e00000] hover:bg-[#00AEEF] p-2 rounded flex gap-1 text-white"> <MdOutlineDeleteOutline className="text-xl text-white"></MdOutlineDeleteOutline>Delete</button></td>
 
