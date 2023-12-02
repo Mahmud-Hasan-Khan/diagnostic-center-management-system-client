@@ -5,14 +5,14 @@ const useAllTests = () => {
 
     const axiosOpen = useAxiosOpen();
 
-    const { data: tests = [], refetch } = useQuery({
+    const { data: tests = [], refetch, isPending: loading } = useQuery({
         queryKey: ['tests'],
         queryFn: async () => {
             const res = await axiosOpen.get('/allTests');
             return res.data;
         }
     })
-    return [tests, refetch]
+    return [tests, refetch, loading]
 };
 
 export default useAllTests;

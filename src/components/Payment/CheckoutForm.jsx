@@ -89,7 +89,8 @@ const CheckoutForm = ({ title, discountPrice, handleBookNow }) => {
 
                 const res = await axiosSecure.post('/payments', payment);
                 // console.log('payment saved', res.data);
-                if (res.data?.paymentResult?.insertedId) {
+                // console.log(res.data);
+                if (res.data?.insertedId) {
                     refetch();
                     Swal.fire({
                         icon: "success",

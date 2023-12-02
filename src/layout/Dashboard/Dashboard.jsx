@@ -20,7 +20,7 @@ const Dashboard = () => {
 
                         <li><NavLink className={({ isActive }) => (isActive ? 'dashboard-nav-active' : 'dashboard-nav-inActive')} to="/dashboard/addTest"><TbTestPipe></TbTestPipe>Add A Test</NavLink></li>
 
-                        <li><NavLink className={({ isActive }) => (isActive ? 'dashboard-nav-active' : 'dashboard-nav-inActive')} to="/dashboard/manageItems"><FaList></FaList>Manage Items</NavLink></li>
+                        <li><NavLink className={({ isActive }) => (isActive ? 'dashboard-nav-active' : 'dashboard-nav-inActive')} to="/dashboard/manageAllTest"><FaList></FaList>All Test</NavLink></li>
 
                         <li><NavLink className={({ isActive }) => (isActive ? 'dashboard-nav-active' : 'dashboard-nav-inActive')} to="/dashboard/bookings"><MdOutlineRateReview></MdOutlineRateReview>Manage Bookings</NavLink></li>
 

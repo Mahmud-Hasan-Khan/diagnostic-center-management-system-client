@@ -21,6 +21,7 @@ const AddTest = () => {
         const title = form.testTitle.value;
         const image = form.image.value;
         const price = form.price.value;
+        const priceNumber = parseInt(price);
         const shortDescription = form.shortDescription.value;
         const slots1 = form.slots1.value;
         const slots2 = form.slots2.value;
@@ -28,7 +29,7 @@ const AddTest = () => {
 
 
         const newTest = {
-            image, title, price, shortDescription,
+            image, title, priceNumber, shortDescription,
             availableDates: [
                 {
                     date: selectedTestAppointmentDate1.toISOString().split('T')[0],
@@ -44,7 +45,7 @@ const AddTest = () => {
                 },
             ],
         }
-        console.log(newTest);
+        // console.log(newTest);
 
         const toastId = toast.loading('Adding a new Test...');
 
@@ -60,7 +61,6 @@ const AddTest = () => {
             .catch(error => {
                 console.error(error);
             });
-
     }
 
     const setMinDate = () => {
@@ -187,7 +187,6 @@ const AddTest = () => {
                                     </label>
                                 </div>
                             </div>
-
 
                             {/* form Short description and job Applicants row */}
                             <div className="md:flex gap-4 mb-8">

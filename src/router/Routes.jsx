@@ -16,6 +16,7 @@ import PrivateRoute from "./PrivateRoute";
 import UpcomingAppointments from "../pages/Dashboard/User/UpcomingAppointments";
 import EditUserProfile from "../pages/Dashboard/User/EditUserProfile";
 import AddTest from "../pages/Dashboard/Admin/AddTest";
+import ManageAllTest from "../pages/Dashboard/Admin/ManageAllTest";
 
 const myCreatedRouter = createBrowserRouter([
     {
@@ -69,6 +70,12 @@ const myCreatedRouter = createBrowserRouter([
                 path: 'addTest',
                 element: <AdminRoute>
                     <AddTest></AddTest>
+                </AdminRoute>
+            },
+            {
+                path: 'manageAllTest',
+                element: <AdminRoute>
+                    <ManageAllTest></ManageAllTest>
                 </AdminRoute>
             },
             // normal user routes
