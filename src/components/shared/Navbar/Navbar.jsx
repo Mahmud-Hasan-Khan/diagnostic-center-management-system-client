@@ -12,7 +12,7 @@ const Navbar = () => {
       <NavLink to='/' className={({ isActive }) => (isActive ? 'navActive' : 'navInActive')}><FcHome /> Home</NavLink>
     </li>
     <li>
-      <NavLink to="/allJobs" className={({ isActive }) => (isActive ? 'navActive' : 'navInActive')}>All Jobs</NavLink>
+      <NavLink to="/allTests" className={({ isActive }) => (isActive ? 'navActive' : 'navInActive')}><TbTestPipe className="text-[#e00000] " /> All Tests</NavLink>
     </li>
   </div>
 

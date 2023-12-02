@@ -15,6 +15,7 @@ import TestDetails from "../pages/TestDetails/TestDetails";
 import PrivateRoute from "./PrivateRoute";
 import UpcomingAppointments from "../pages/Dashboard/User/UpcomingAppointments";
 import EditUserProfile from "../pages/Dashboard/User/EditUserProfile";
+import AddTest from "../pages/Dashboard/Admin/AddTest";
 
 const myCreatedRouter = createBrowserRouter([
     {
@@ -64,6 +65,12 @@ const myCreatedRouter = createBrowserRouter([
                     <AllUsers></AllUsers>
                 </AdminRoute>
             },
+            {
+                path: 'addTest',
+                element: <AdminRoute>
+                    <AddTest></AddTest>
+                </AdminRoute>
+            },
             // normal user routes
             {
                 path: 'userHome',
@@ -76,7 +83,7 @@ const myCreatedRouter = createBrowserRouter([
             {
                 path: 'editProfile/:id',
                 element: <EditUserProfile></EditUserProfile>,
-                loader: ({ params }) => fetch(`http://localhost:5000/user/${params.id}`)
+                // loader: ({ params }) => fetch(`http://localhost:5000/user/${params.id}`)
             },
             {
                 path: 'appointments',

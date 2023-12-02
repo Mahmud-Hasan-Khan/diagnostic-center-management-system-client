@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import useAllTests from "../../hooks/useAllTests";
 
 const CheckoutForm = ({ title, discountPrice, handleBookNow }) => {
-    const [refetch] = useAllTests();
+    const [, refetch] = useAllTests();
     const [error, setError] = useState('');
     const [clientSecret, setClientSecret] = useState('');
     const [transactionId, setTransactionId] = useState('');
