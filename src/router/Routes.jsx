@@ -18,6 +18,7 @@ import EditUserProfile from "../pages/Dashboard/User/EditUserProfile";
 import AddTest from "../pages/Dashboard/Admin/AddTest";
 import ManageAllTest from "../pages/Dashboard/Admin/ManageAllTest";
 import UpdateTest from "../pages/Dashboard/Admin/UpdateTest";
+import Reservation from "../pages/Dashboard/Admin/Reservation";
 
 const myCreatedRouter = createBrowserRouter([
     {
@@ -83,6 +84,12 @@ const myCreatedRouter = createBrowserRouter([
                 path: 'updateTest/:id',
                 element: <AdminRoute>
                     <UpdateTest></UpdateTest>
+                </AdminRoute>
+            },
+            {
+                path: 'reservation',
+                element: <AdminRoute>
+                    <Reservation></Reservation>
                 </AdminRoute>
             },
             // normal user routes

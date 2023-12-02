@@ -8,7 +8,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { toast } from "react-hot-toast";
 import { useState } from "react";
 
-
 const UpdateTest = () => {
     const axiosSecure = useAxiosSecure();
     const { id } = useParams();
@@ -57,7 +56,7 @@ const UpdateTest = () => {
                 },
             ],
         }
-        console.log(updateTest);
+        // console.log(updateTest);
 
         const toastId = toast.loading('Updating Test...');
 
@@ -75,7 +74,6 @@ const UpdateTest = () => {
                 console.error(error);
             });
     }
-
     const setMinDate = () => {
         return new Date(); // Returns the current date
     };
@@ -92,7 +90,6 @@ const UpdateTest = () => {
                         <form onSubmit={handleUpdateTest}>
 
                             {/* form test Title and image row */}
-
                             <div className="md:flex gap-4 mb-8">
                                 <div className="form-control md:w-1/2">
                                     <label className="label">
@@ -128,7 +125,7 @@ const UpdateTest = () => {
                             <div className="md:flex justify-between gap-4 mb-8 border p-1 rounded">
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="text-lg font-medium">Appointment Date</span>
+                                        <span className="text-lg font-medium">Available Date</span>
                                     </label>
                                     <label className="rounded">
                                         <DatePicker
@@ -142,7 +139,7 @@ const UpdateTest = () => {
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="text-lg font-medium">Applicants Slot</span>
+                                        <span className="text-lg font-medium">Available Slot</span>
                                     </label>
                                     <label className="rounded">
                                         <input type="number" name="slots1" placeholder="Input Slot Number" className="input input-bordered w-full" />
@@ -153,7 +150,7 @@ const UpdateTest = () => {
                             <div className="md:flex justify-between gap-4 mb-8 border p-1 rounded">
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="text-lg font-medium">Appointment Date</span>
+                                        <span className="text-lg font-medium">Available Date</span>
                                     </label>
                                     <label className="rounded">
                                         <DatePicker
@@ -167,18 +164,18 @@ const UpdateTest = () => {
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="text-lg font-medium">Applicants Slot</span>
+                                        <span className="text-lg font-medium">Available Slot</span>
                                     </label>
                                     <label className="rounded">
                                         <input type="number" name="slots2" placeholder="Input Slot Number" className="input input-bordered w-full" />
                                     </label>
                                 </div>
                             </div>
-                            {/* Available Appointment Date and Slot #3 */}
+                            {/* Available Date and Slot #3 */}
                             <div className="md:flex justify-between gap-4 mb-8 border p-1 rounded">
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="text-lg font-medium">Appointment Date</span>
+                                        <span className="text-lg font-medium">Available Date</span>
                                     </label>
                                     <label className="rounded">
                                         <DatePicker
@@ -201,7 +198,7 @@ const UpdateTest = () => {
                                 </div>
                             </div>
 
-                            {/* form Short description and job Applicants row */}
+                            {/* form Short description */}
                             <div className="md:flex gap-4 mb-8">
                                 <div className="form-control w-full">
                                     <label className="label">
