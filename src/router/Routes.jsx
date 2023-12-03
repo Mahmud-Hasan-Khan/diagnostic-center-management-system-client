@@ -21,6 +21,7 @@ import UpdateTest from "../pages/Dashboard/Admin/UpdateTest";
 import Reservation from "../pages/Dashboard/Admin/Reservation";
 import TestResults from "../pages/Dashboard/User/TestResults";
 import AddBanner from "../pages/Dashboard/Admin/AddBanner";
+import AllBanners from "../pages/Dashboard/Admin/AllBanners";
 
 const myCreatedRouter = createBrowserRouter([
     {
@@ -98,6 +99,12 @@ const myCreatedRouter = createBrowserRouter([
                 path: 'AddBanner',
                 element: <AdminRoute>
                     <AddBanner></AddBanner>
+                </AdminRoute>
+            },
+            {
+                path: 'allBanners',
+                element: <AdminRoute>
+                    <AllBanners></AllBanners>
                 </AdminRoute>
             },
             // normal user routes
