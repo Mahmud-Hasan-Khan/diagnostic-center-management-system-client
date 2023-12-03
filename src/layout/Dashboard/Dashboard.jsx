@@ -1,11 +1,13 @@
+import useAdmin from "../../hooks/useAdmin";
+import { NavLink, Outlet } from "react-router-dom";
+// icon
 import { FaHome, FaList, FaUser } from "react-icons/fa";
 import { MdOutlineRateReview } from "react-icons/md";
 import { SlNotebook } from "react-icons/sl";
 import { TbTestPipe } from "react-icons/tb";
-import { NavLink, Outlet } from "react-router-dom";
-import useAdmin from "../../hooks/useAdmin";
 import { CgProfile } from "react-icons/cg";
 import { FcHome } from "react-icons/fc";
+import { MdOutlineAddToQueue } from "react-icons/md";
 
 const Dashboard = () => {
     const [isAdmin] = useAdmin();
@@ -25,6 +27,8 @@ const Dashboard = () => {
                         <li><NavLink className={({ isActive }) => (isActive ? 'dashboard-nav-active' : 'dashboard-nav-inActive')} to="/dashboard/manageAllTest"><FaList></FaList>All Test</NavLink></li>
 
                         <li><NavLink className={({ isActive }) => (isActive ? 'dashboard-nav-active' : 'dashboard-nav-inActive')} to="/dashboard/reservation"><MdOutlineRateReview></MdOutlineRateReview>Reservation</NavLink></li>
+
+                        <li><NavLink className={({ isActive }) => (isActive ? 'dashboard-nav-active' : 'dashboard-nav-inActive')} to="/dashboard/AddBanner"><MdOutlineAddToQueue></MdOutlineAddToQueue>Add Banner</NavLink></li>
 
                     </>
                         :
