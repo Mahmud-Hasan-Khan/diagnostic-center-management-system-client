@@ -1,5 +1,6 @@
-import { FaShoppingCart, FaHome, FaCalendar, FaList, FaUser } from "react-icons/fa";
+import { FaHome, FaList, FaUser } from "react-icons/fa";
 import { MdMenuBook, MdOutlineRateReview } from "react-icons/md";
+import { SlNotebook } from "react-icons/sl";
 import { TbTestPipe } from "react-icons/tb";
 import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../../hooks/useAdmin";
@@ -30,15 +31,9 @@ const Dashboard = () => {
                         <>
                             <li><NavLink className={({ isActive }) => (isActive ? 'dashboard-nav-active' : 'dashboard-nav-inActive')} to="/dashboard/userProfile"><CgProfile></CgProfile>User Profile</NavLink></li>
 
-                            <li><NavLink className={({ isActive }) => (isActive ? 'dashboard-nav-active' : 'dashboard-nav-inActive')} to="/dashboard/appointments"><CgProfile></CgProfile>Appointments</NavLink></li>
+                            <li><NavLink className={({ isActive }) => (isActive ? 'dashboard-nav-active' : 'dashboard-nav-inActive')} to="/dashboard/appointments"><SlNotebook></SlNotebook>Appointments</NavLink></li>
 
-
-                            <li><NavLink to="/dashboard/paymentHistory"><FaCalendar></FaCalendar>Payment History</NavLink></li>
-
-                            <li><NavLink to="/dashboard/cart"><FaShoppingCart></FaShoppingCart>My Cart</NavLink></li>
-
-                            <li><NavLink to="/dashboard/review"><MdOutlineRateReview></MdOutlineRateReview>Add Review</NavLink></li>
-
+                            <li><NavLink className={({ isActive }) => (isActive ? 'dashboard-nav-active' : 'dashboard-nav-inActive')} to="/dashboard/testResults"><TbTestPipe></TbTestPipe>Test Results</NavLink></li>
                         </>
                 }
 

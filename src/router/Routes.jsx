@@ -19,6 +19,7 @@ import AddTest from "../pages/Dashboard/Admin/AddTest";
 import ManageAllTest from "../pages/Dashboard/Admin/ManageAllTest";
 import UpdateTest from "../pages/Dashboard/Admin/UpdateTest";
 import Reservation from "../pages/Dashboard/Admin/Reservation";
+import TestResults from "../pages/Dashboard/User/TestResults";
 
 const myCreatedRouter = createBrowserRouter([
     {
@@ -109,6 +110,10 @@ const myCreatedRouter = createBrowserRouter([
             {
                 path: 'appointments',
                 element: <UpcomingAppointments />
+            },
+            {
+                path: 'testResults',
+                element: <TestResults />
             }
         ]
     }
