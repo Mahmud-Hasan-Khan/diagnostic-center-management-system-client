@@ -1,8 +1,14 @@
+import Container from '../../components/shared/Container/Container';
+import Banner from './Banner';
 
 const Home = () => {
     return (
         <div>
-            <p>home page</p>
+            <Container>
+                <p>home page</p>
+                <Banner></Banner>
+
+            </Container>
         </div>
     );
 };

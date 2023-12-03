@@ -23,7 +23,7 @@ const TestResults = () => {
         },
         enabled: !!user,
     });
-    console.log(TestResults);
+    // console.log(TestResults);
 
     return (
         <div className="bg-white rounded-lg overflow-hidden">
@@ -63,7 +63,7 @@ const TestResults = () => {
                                                 <td>
                                                     <p className="bg-base-300 rounded-full px-2 text-center text-base">{test?.email}</p>
                                                 </td>
-                                                <td>{moment(test?.appointmentDate).format("Do MMM YYYY")}</td>
+                                                <td>{moment(test?.appointmentDate).format(" Do MMM YYYY")}</td>
                                                 <td>
                                                     <p className="font-medium bg-green-300 px-4 py-2 rounded text-center flex items-center gap-1"><IoCheckmarkDoneSharp className="text-lg"></IoCheckmarkDoneSharp> {test?.testStatus}</p>
                                                 </td>

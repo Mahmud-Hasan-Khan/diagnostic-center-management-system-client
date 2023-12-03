@@ -1,10 +1,11 @@
 import { FaHome, FaList, FaUser } from "react-icons/fa";
-import { MdMenuBook, MdOutlineRateReview } from "react-icons/md";
+import { MdOutlineRateReview } from "react-icons/md";
 import { SlNotebook } from "react-icons/sl";
 import { TbTestPipe } from "react-icons/tb";
 import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../../hooks/useAdmin";
 import { CgProfile } from "react-icons/cg";
+import { FcHome } from "react-icons/fc";
 
 const Dashboard = () => {
     const [isAdmin] = useAdmin();
@@ -38,9 +39,9 @@ const Dashboard = () => {
 
                 <div className="divider"></div>
 
-                <li><NavLink to="/"><FaHome></FaHome>Home</NavLink></li>
+                <li><NavLink className={({ isActive }) => (isActive ? 'dashboard-nav-active' : 'dashboard-nav-inActive')} to='/'><FcHome></FcHome>Home</NavLink></li>
 
-                <li><NavLink to="/order/salad"><MdMenuBook></MdMenuBook>Menu</NavLink></li>
+
             </ul>
             <div className='flex-1'>
                 <div className='p-2 lg:p-5 flex justify-center'>
