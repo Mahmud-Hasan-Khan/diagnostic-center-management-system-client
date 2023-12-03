@@ -6,6 +6,7 @@ import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { CiSettings } from "react-icons/ci";
 import Swal from "sweetalert2";
+import { useState } from "react";
 
 const AllBanners = () => {
 
@@ -48,32 +49,54 @@ const AllBanners = () => {
         });
     }
 
+
+    const [bannerState, setBannerState] = useState(banners);
+
     const handleSetActive = (id) => {
         Swal.fire({
-            title: "Are you sure to delete the test?",
+            title: "Are you sure to set this banner as active?",
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, I want it!"
-        }).then((result) => {
+            confirmButtonText: "Yes, set it as active!"
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                axiosSecure.delete(`/deleteTest/${id}`)
-                    .then(res => {
-                        console.log(res.data)
-                        if (res.data.deletedCount > 0) {
-                            Swal.fire({
-                                title: "Updated!",
-                                text: "Test has been deleted",
-                                icon: "success"
-                            });
-                            refetch();
-                        }
-                    })
+                try {
+                    // Create a copy of banners with updated isActive values
+                    const updatedBanners = banners.map((banner) => ({
+                        ...banner,
+                        isActive: banner._id === id,
+                    }));
+
+                    // Update the local state with the new isActive values
+                    setBannerState(updatedBanners);
+
+                    // Make the request to set the banner as active
+                    await axiosSecure.patch(`/setActiveBanner/${id}`);
+
+                    Swal.fire({
+                        title: "Updated!",
+                        text: "Banner has been set as active",
+                        icon: "success"
+                    });
+
+                    // Refetch data to get the latest changes
+                    refetch();
+                } catch (error) {
+                    console.error("Error setting banner as active:", error);
+                    Swal.fire({
+                        title: "Error!",
+                        text: "An error occurred while setting the banner as active",
+                        icon: "error"
+                    });
+                }
             }
         });
-    }
+    };
+
+
 
     return (
         <div className="bg-white rounded-lg overflow-hidden">
