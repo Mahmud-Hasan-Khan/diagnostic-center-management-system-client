@@ -4,7 +4,7 @@ const DoctorCard = ({ doctor }) => {
     return (
         <div>
             <div
-                className="card w-96 h-[420px] bg-gray-200 border-y-2 border-[#05d6f7] shadow-xl"
+                className="card w-96 h-[420px] border-y-2 border-[#05d6f7] shadow-xl"
             >
                 <div className='rounded-full w-96 mx-auto'>
                     <figure>

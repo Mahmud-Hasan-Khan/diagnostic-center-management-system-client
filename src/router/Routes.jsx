@@ -24,6 +24,7 @@ import AddBanner from "../pages/Dashboard/Admin/AddBanner";
 import AllBanners from "../pages/Dashboard/Admin/AllBanners";
 import HealthWellness from "../pages/HealthWellness/HealthWellness";
 import FindDoctors from "../pages/FindDoctors/FindDoctors";
+import Departments from "../pages/Departments/Departments";
 
 const myCreatedRouter = createBrowserRouter([
     {
@@ -46,6 +47,10 @@ const myCreatedRouter = createBrowserRouter([
             {
                 path: '/findDoctors',
                 element: <FindDoctors />
+            },
+            {
+                path: '/departments',
+                element: <Departments />
             },
             {
                 path: '/testDetail/:id',

@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 import { FaSearch } from "react-icons/fa";
 import SectionTitle from "../../components/shared/SectionTitle/SectionTitle";
 import DoctorCard from "./DoctorCard";
+import Container from '../../components/shared/Container/Container'
 
 const FindDoctors = () => {
     const axiosOpen = useAxiosOpen();
@@ -23,7 +24,8 @@ const FindDoctors = () => {
     });
 
     return (
-        <>
+
+        <Container>
             <Helmet>
                 <title>Find Doctor | MediCare</title>
             </Helmet>
@@ -71,7 +73,7 @@ const FindDoctors = () => {
                 </div>
 
             </div>
-        </>
+        </Container>
     );
 };
 
