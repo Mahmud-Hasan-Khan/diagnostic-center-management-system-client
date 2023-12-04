@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import SectionTitle from "../../../components/shared/SectionTitle/SectionTitle";
 import DatePicker from 'react-datepicker';
@@ -11,6 +11,9 @@ import { useState } from "react";
 const UpdateTest = () => {
     const axiosSecure = useAxiosSecure();
     const { id } = useParams();
+
+    const navigate = useNavigate();
+
     // data Load Using TanStack Query
     const { data: test = {}, refetch } = useQuery({
         queryKey: ['test', id],
@@ -68,6 +71,7 @@ const UpdateTest = () => {
                     toast.success('Test Updated Successful', { id: toastId });
                     form.reset();
                     refetch()
+                    navigate('/dashboard/manageAllTest')
                 }
             })
             .catch(error => {

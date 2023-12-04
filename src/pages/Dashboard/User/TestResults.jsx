@@ -77,7 +77,7 @@ const TestResults = () => {
                             </div>
                         </div>
                     ) : (
-                        <div className="text-center text-lg text-[#ac52b4] font-medium">No Reservation found.</div>
+                        <div className="text-center text-lg text-[#ac52b4] font-medium">No Result found.</div>
                     )}
                 </div>
 

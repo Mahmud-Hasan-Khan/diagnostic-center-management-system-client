@@ -74,6 +74,7 @@ const TestDetails = () => {
             const UpcomingAppointment = {
                 email: user.email,
                 testTitle: title,
+                image: image,
                 PaymentAmount: discountPrice,
                 appointmentDate: selectedDate,
                 appointmentTime: selectedTime,

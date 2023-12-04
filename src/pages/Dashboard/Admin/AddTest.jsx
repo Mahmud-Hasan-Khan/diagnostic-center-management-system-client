@@ -20,8 +20,8 @@ const AddTest = () => {
         const form = e.target;
         const title = form.testTitle.value;
         const image = form.image.value;
-        const price = form.price.value;
-        const priceNumber = parseInt(price);
+        const getPrice = form.price.value;
+        const price = parseInt(getPrice);
         const shortDescription = form.shortDescription.value;
         const slots1 = form.slots1.value;
         const slots2 = form.slots2.value;
@@ -29,7 +29,7 @@ const AddTest = () => {
 
 
         const newTest = {
-            image, title, priceNumber, shortDescription,
+            image, title, price, shortDescription,
             availableDates: [
                 {
                     date: selectedTestAppointmentDate1.toISOString().split('T')[0],
