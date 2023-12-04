@@ -9,6 +9,8 @@ import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { ImSpinner3 } from "react-icons/im";
 import Container from "../../components/shared/Container/Container";
+import Aos from "aos";
+import 'aos/dist/aos.css';
 
 const bloodGroup = ["A+", "A-", "B+", "B-", "AB+", " AB-", "O+", "O-"];
 
@@ -165,6 +167,11 @@ const Registration = () => {
             setConfirmPasswordError("");
         }
     };
+
+    // AOS setting
+    Aos.init({
+        duration: 3000,
+    })
 
     return (
         <div>

@@ -33,7 +33,9 @@
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.20.0",
     "react-simple-typewriter": "^5.0.1",
+    "react-slick": "^0.29.0",
     "react-spinners": "^0.13.8",
+    "slick-carousel": "^1.8.1",
     "sort-by": "^1.2.0",
     "sweetalert2": "^11.10.1",
     "swiper": "^11.0.5"

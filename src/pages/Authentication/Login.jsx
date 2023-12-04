@@ -2,19 +2,18 @@ import { useState } from "react";
 import { ImSpinner3 } from "react-icons/im";
 import { HiMiniEye, HiEyeSlash } from "react-icons/hi2";
 import { Link, useNavigate } from "react-router-dom";
-
 import { Typewriter } from "react-simple-typewriter";
 import 'aos/dist/aos.css';
 import Aos from "aos";
 import { Helmet } from "react-helmet-async";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-hot-toast";
-import useAdmin from "../../hooks/useAdmin";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Login = () => {
 
     const { loading, signIn } = useAuth();
-    const [isAdmin] = useAdmin();
+    const axiosSecure = useAxiosSecure();
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
@@ -29,15 +28,14 @@ const Login = () => {
         const toastId = toast.loading('Logging in...');
         try {
             await signIn(email, password)
+            const res = await axiosSecure.get(`/user/admin/${email}`)
+            const isAdmin = res.data.admin
+            // console.log(isAdmin);
 
-            if (isAdmin && isAdmin == true) {
-                // If admin, navigate to the admin dashboard
-                // console.log('Navigating to /dashboard/adminHome');
-                navigate('/dashboard');
+            if (isAdmin) {
+                navigate('/dashboard/adminHome');
             } else {
-                // If normal user, navigate to the user dashboard
-                // console.log('Navigating to /dashboard/userHome');
-                navigate('/dashboard');
+                navigate('/dashboard/userHome');
             }
 
             toast.success('Logged in successful', { id: toastId });

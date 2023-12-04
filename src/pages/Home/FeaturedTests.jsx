@@ -6,35 +6,35 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Autoplay, Pagination } from 'swiper/modules';
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import useAxiosOpen from "../../hooks/useAxiosOpen";
 
 const FeaturedTests = () => {
 
-    const axiosSecure = useAxiosSecure();
+    const axiosOpen = useAxiosOpen();
 
     //data Load Using TanStack Query
     const { data: featuredTests = [] } = useQuery({
         queryKey: ['featuredTests'],
         queryFn: async () => {
-            const res = await axiosSecure.get('/mostlyBookedTests');
+            const res = await axiosOpen.get('/mostlyBookedTests');
             return res.data;
         }
     })
-    console.log(featuredTests);
+    // console.log(featuredTests);
 
     const [swiperRef, setSwiperRef] = useState(null);
 
     const onSwiperMouseEnter = () => {
         if (swiperRef) {
-            swiperRef.autoplay.stop();
+            swiperRef.autoplay?.stop();
         }
     };
 
     const onSwiperMouseLeave = () => {
         if (swiperRef) {
-            swiperRef.autoplay.start();
+            swiperRef.autoplay?.start();
         }
     };
 
