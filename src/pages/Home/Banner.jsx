@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
 import { RiCoupon3Line } from "react-icons/ri";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import useAxiosOpen from "../../hooks/useAxiosOpen";
 
 const Banner = () => {
 
-    const axiosSecure = useAxiosSecure();
+    const axiosOpen = useAxiosOpen();
 
     //data Load Using TanStack Query
     const { data: banner } = useQuery({
         queryKey: ['banner'],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/activeBanner`);
+            const res = await axiosOpen.get(`/activeBanner`);
             return res.data;
         },
     });
