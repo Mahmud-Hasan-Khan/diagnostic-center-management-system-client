@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../../components/shared/Navbar/Navbar";
+import Footer from "../../components/shared/Footer/Footer";
 
 
 const MainLayout = () => {
@@ -9,7 +10,7 @@ const MainLayout = () => {
             <div className='flex-grow'>
                 <Outlet></Outlet>
             </div>
-            {/* <Footer className="mt-auto"></Footer> */}
+            <Footer className="mt-auto"></Footer>
         </div>
     );
 };
