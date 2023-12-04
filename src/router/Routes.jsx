@@ -22,6 +22,7 @@ import Reservation from "../pages/Dashboard/Admin/Reservation";
 import TestResults from "../pages/Dashboard/User/TestResults";
 import AddBanner from "../pages/Dashboard/Admin/AddBanner";
 import AllBanners from "../pages/Dashboard/Admin/AllBanners";
+import HealthWellness from "../pages/HealthWellness/HealthWellness";
 
 const myCreatedRouter = createBrowserRouter([
     {
@@ -38,11 +39,15 @@ const myCreatedRouter = createBrowserRouter([
                 element: <AllTests />
             },
             {
+                path: '/healthWellness',
+                element: <HealthWellness />
+            },
+            {
                 path: '/testDetail/:id',
                 element: <PrivateRoute>
                     <TestDetails></TestDetails>
                 </PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/test/${params.id}`)
+                loader: ({ params }) => fetch(`https://diagnostic-center-management-system-server-with-mongoose.vercel.app/test/${params.id}`)
             },
             {
                 path: '/login',
@@ -118,8 +123,7 @@ const myCreatedRouter = createBrowserRouter([
             },
             {
                 path: 'editProfile/:id',
-                element: <EditUserProfile></EditUserProfile>,
-                // loader: ({ params }) => fetch(`http://localhost:5000/user/${params.id}`)
+                element: <EditUserProfile></EditUserProfile>
             },
             {
                 path: 'appointments',

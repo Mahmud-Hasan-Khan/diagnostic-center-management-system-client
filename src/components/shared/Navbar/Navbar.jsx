@@ -3,6 +3,7 @@ import navLogo from '../../../assets/images/Logo.png';
 import { FcHome } from "react-icons/fc";
 import MenuDropdown from "./MenuDropdown";
 import { TbTestPipe } from "react-icons/tb";
+import { MdOutlineHealthAndSafety } from "react-icons/md";
 import DarkTheme from "./DarkTheme";
 
 const Navbar = () => {
@@ -13,6 +14,9 @@ const Navbar = () => {
     </li>
     <li>
       <NavLink to="/allTests" className={({ isActive }) => (isActive ? 'navActive' : 'navInActive')}><TbTestPipe className="text-[#e00000] " /> All Tests</NavLink>
+    </li>
+    <li>
+      <NavLink to="/healthWellness" className={({ isActive }) => (isActive ? 'navActive' : 'navInActive')}><MdOutlineHealthAndSafety className="text-[#e00000] " />Health Wellness</NavLink>
     </li>
   </div>
 
@@ -36,6 +40,9 @@ const Navbar = () => {
           </li>
           <li>
             <NavLink to="/allTests" className={({ isActive }) => (isActive ? 'navActive' : 'navInActive')}><TbTestPipe className="text-[#e00000] " /> All Tests</NavLink>
+          </li>
+          <li>
+            <NavLink to="/healthWellness" className={({ isActive }) => (isActive ? 'navActive' : 'navInActive')}><MdOutlineHealthAndSafety className="text-[#e00000] " /> Health Wellness</NavLink>
           </li>
         </ul>
       </div>

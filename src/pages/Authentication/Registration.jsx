@@ -35,7 +35,8 @@ const Registration = () => {
         // Load districts and upazilas data from JSON files when the component mounts
         const fetchDistricts = async () => {
             try {
-                const response = await fetch("http://localhost:5000/districts");
+                // const response = await fetch("http://localhost:5000/districts");
+                const response = await fetch("https://diagnostic-center-management-system-server-with-mongoose.vercel.app/districts");
                 const data = await response.json();
                 setDistricts(data);
             } catch (error) {
@@ -45,7 +46,7 @@ const Registration = () => {
 
         const fetchUpazilas = async () => {
             try {
-                const response = await fetch("http://localhost:5000/upazilas");
+                const response = await fetch("https://diagnostic-center-management-system-server-with-mongoose.vercel.app/upazilas");
                 const data = await response.json();
                 setUpazilas(data);
             } catch (error) {
