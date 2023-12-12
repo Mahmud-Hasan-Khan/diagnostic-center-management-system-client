@@ -5,8 +5,8 @@ import { Helmet } from "react-helmet-async";
 import Container from "../../components/shared/Container/Container"
 import { FaSearch } from 'react-icons/fa';
 import useAllTests from "../../hooks/useAllTests";
-import useAxiosOpen from "../../hooks/useAxiosOpen";
-import { useQuery } from "@tanstack/react-query";
+// import useAxiosOpen from "../../hooks/useAxiosOpen";
+// import { useQuery } from "@tanstack/react-query";
 
 const AllTests = () => {
     const [tests, refetch] = useAllTests();
@@ -15,28 +15,28 @@ const AllTests = () => {
     const [searchQuery, setSearchQuery] = useState('');
 
     //pagination
-    const [itemsPerPage, setItemPerPage] = useState(3);
-    const axiosOpen = useAxiosOpen();
-    const { data: count = {} } = useQuery({
-        queryKey: ['count'],
-        queryFn: async () => {
-            const res = await axiosOpen.get('/testsCount')
-            return res.data;
-        }
-    })
-    const pageCount = count?.count;
-    console.log(pageCount);
-    // const itemsPerPage = 3;
-    const numberOfPages = Math.ceil(pageCount / itemsPerPage);
-    console.log(numberOfPages);
-    const pages = [...Array(numberOfPages).keys()];
-    console.log(pages);
+    // const [itemsPerPage, setItemPerPage] = useState(3);
+    // const axiosOpen = useAxiosOpen();
+    // const { data: count = {} } = useQuery({
+    //     queryKey: ['count'],
+    //     queryFn: async () => {
+    //         const res = await axiosOpen.get('/testsCount')
+    //         return res.data;
+    //     }
+    // })
+    // const pageCount = count?.count;
+    // console.log(pageCount);
+    // // const itemsPerPage = 3;
+    // const numberOfPages = Math.ceil(pageCount / itemsPerPage);
+    // console.log(numberOfPages);
+    // const pages = [...Array(numberOfPages).keys()];
+    // console.log(pages);
 
-    const handleItemsPerPage = (e) => {
-        console.log(e.target.value);
-        const val = parseInt(e.target.value);
-        setItemPerPage(val)
-    }
+    // const handleItemsPerPage = (e) => {
+    //     console.log(e.target.value);
+    //     const val = parseInt(e.target.value);
+    //     setItemPerPage(val)
+    // }
 
 
     useEffect(() => {
@@ -118,7 +118,7 @@ const AllTests = () => {
                                 </motion.div>
                             ))}
                         </motion.div>
-                        <div className="space-x-3 flex justify-center text-center m-10">
+                        {/* <div className="space-x-3 flex justify-center text-center m-10">
                             {
                                 pages.map(page => <button className="bg-black text-white px-2 py-1" key={page}>{page}</button>)
                             }
@@ -128,7 +128,7 @@ const AllTests = () => {
                                 <option value="9">9</option>
                                 <option value="12">12</option>
                             </select>
-                        </div>
+                        </div> */}
                     </div>
 
                 </Container>
