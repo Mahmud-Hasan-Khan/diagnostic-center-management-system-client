@@ -38,7 +38,8 @@ const myCreatedRouter = createBrowserRouter([
             },
             {
                 path: '/allTests',
-                element: <AllTests />
+                element: <AllTests />,
+                loader: () => fetch('https://diagnostic-center-management-system-server-with-mongoose.vercel.app/testsCount')
             },
             {
                 path: '/healthWellness',

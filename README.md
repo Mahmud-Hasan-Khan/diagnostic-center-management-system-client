@@ -109,3 +109,7 @@ A simple full-stack Diagnostic Center Management System website where users can 
 
 ## Live Site Link
 - [Click Here to Open Live Site](https://medicare-mahmud.web.app/)
+
+###  Admin User
+admin@admin.com
+#### Admin Password : Qazwsx!

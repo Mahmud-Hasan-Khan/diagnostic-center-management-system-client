@@ -4,39 +4,55 @@ import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Container from "../../components/shared/Container/Container"
 import { FaSearch } from 'react-icons/fa';
-import useAllTests from "../../hooks/useAllTests";
-// import useAxiosOpen from "../../hooks/useAxiosOpen";
-// import { useQuery } from "@tanstack/react-query";
+import { useLoaderData } from "react-router-dom";
+import './AllTests.css'
+import { RiArrowLeftDoubleFill, RiArrowRightDoubleFill } from "react-icons/ri";
+
 
 const AllTests = () => {
-    const [tests, refetch] = useAllTests();
+    const [tests, setTests] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [itemsPerPage, setItemPerPage] = useState(6);
+
+    // const axiosOpen = useAxiosOpen();
     const sectionRef = useRef(null);
     const [inView, setInView] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
 
-    //pagination
-    // const [itemsPerPage, setItemPerPage] = useState(3);
-    // const axiosOpen = useAxiosOpen();
-    // const { data: count = {} } = useQuery({
-    //     queryKey: ['count'],
-    //     queryFn: async () => {
-    //         const res = await axiosOpen.get('/testsCount')
-    //         return res.data;
-    //     }
-    // })
-    // const pageCount = count?.count;
-    // console.log(pageCount);
-    // // const itemsPerPage = 3;
-    // const numberOfPages = Math.ceil(pageCount / itemsPerPage);
-    // console.log(numberOfPages);
-    // const pages = [...Array(numberOfPages).keys()];
-    // console.log(pages);
 
-    // const handleItemsPerPage = (e) => {
-    //     console.log(e.target.value);
-    //     const val = parseInt(e.target.value);
-    //     setItemPerPage(val)
-    // }
+    useEffect(() => {
+        fetch(`https://diagnostic-center-management-system-server-with-mongoose.vercel.app/allTests?page=${currentPage}&size=${itemsPerPage}`)
+            .then(res => res.json())
+            .then(data => setTests(data))
+    }, [currentPage, itemsPerPage])
+
+
+    //pagination
+
+    const { count } = useLoaderData();
+    // console.log(count);
+    const numberOfPages = Math.ceil(count / itemsPerPage);
+    // console.log(numberOfPages);
+    const pages = [...Array(numberOfPages).keys()];
+    console.log(pages);
+
+    const handleItemsPerPage = (e) => {
+        console.log(e.target.value);
+        const val = parseInt(e.target.value);
+        setItemPerPage(val);
+        setCurrentPage(0);
+    }
+
+    const handlePrevPage = () => {
+        if (currentPage > 0) {
+            setCurrentPage(currentPage - 1)
+        }
+    }
+    const handleNextPage = () => {
+        if (currentPage < pages.length - 1) {
+            setCurrentPage(currentPage + 1)
+        }
+    }
 
 
     useEffect(() => {
@@ -89,9 +105,9 @@ const AllTests = () => {
                                             </div>
                                             <button
                                                 className="md:ml-2 bg-[#e00000] hover:bg-[#ff9416] text-white font-medium py-3 px-4 rounded-lg w-full"
-                                                onClick={() => {
-                                                    refetch({ searchQuery });
-                                                }}
+                                            // onClick={() => {
+                                            //     // refetch({ searchQuery });
+                                            // }}
                                             >
                                                 Search
                                             </button>
@@ -118,19 +134,19 @@ const AllTests = () => {
                                 </motion.div>
                             ))}
                         </motion.div>
-                        {/* <div className="space-x-3 flex justify-center text-center m-10">
+                        <div className='pagination mx-auto flex justify-center'>
+                            <button className="flex items-center text-white bg-[#e00000] hover:bg-orange-600" onClick={handlePrevPage} ><RiArrowLeftDoubleFill className="text-2xl" />  Prev</button>
                             {
-                                pages.map(page => <button className="bg-black text-white px-2 py-1" key={page}>{page}</button>)
+                                pages.map(page => <button className={currentPage === page ? 'selected' : undefined} onClick={() => setCurrentPage(page)} key={page}>{page}</button>)
                             }
-                            <select className="border border-black" value={itemsPerPage} onChange={handleItemsPerPage} name="" id="">
-                                <option value="3">3</option>
+                            <button className="flex items-center text-white bg-[#e00000] hover:bg-orange-600" onClick={handleNextPage}>Next <RiArrowRightDoubleFill className="text-2xl" /></button>
+                            <select className="border border-orange-600 rounded-md" value={itemsPerPage} onChange={handleItemsPerPage} name="" id="">
                                 <option value="6">6</option>
                                 <option value="9">9</option>
                                 <option value="12">12</option>
                             </select>
-                        </div> */}
+                        </div>
                     </div>
-
                 </Container>
             </div>
         </section>
